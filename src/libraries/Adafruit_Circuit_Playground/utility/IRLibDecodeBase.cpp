@@ -1,4 +1,4 @@
-/* IRLibDecodeBase.cpp 
+/* IRLibDecodeBase.cpp
  * Part of IRLib Library for Arduino receiving, decoding, and sending
  * infrared signals. See COPYRIGHT.txt and LICENSE.txt for more information.
  */
@@ -54,7 +54,7 @@ void IRdecodeBase::dumpResults(bool verbose) {
     if (i % 2) {
       LowMark=min(LowMark, interval);  HiMark=max(HiMark, interval);
       Serial.print(i/2-1,DEC);  Serial.print(F(":m"));
-    } 
+    }
     else {
        if(interval>0)LowSpace=min(LowSpace, interval);  HiSpace=max (HiSpace, interval);
        Serial.print(F(" s"));
@@ -73,25 +73,25 @@ void IRdecodeBase::dumpResults(bool verbose) {
   Serial.println();
 }
 
-/* We use a generic routine because most protocols have the same basic structure. 
+/* We use a generic routine because most protocols have the same basic structure.
  * Previous versions of this method would handle protocols with variable marks
  * or variable spaces. However we have discovered that only Sony protocol uses
  * variable marks so we have stripped out that portion of the code. This changes
  * the number of necessary parameters. We no longer need markOne and markZero
  * because they are both the same which we will pass in markData. Note this new
  * version will handle up to 48 bits putting the most significant 16 bits in
- * "this.address" in the least significant 32 bits in "this.data". We could have 
+ * "this.address" in the least significant 32 bits in "this.data". We could have
  * allowed for 64 bit but we have not seen generic protocols that large.
  */
-bool IRdecodeBase::decodeGeneric(uint8_t expectedLength, 
-      uint16_t headMark, uint16_t headSpace,  uint16_t markData, 
+bool IRdecodeBase::decodeGeneric(uint8_t expectedLength,
+      uint16_t headMark, uint16_t headSpace,  uint16_t markData,
       uint16_t spaceOne, uint16_t spaceZero) {
    resetDecoder();//This used to be in the receiver getResults.
 // If "expectedLenght" or "headMark" or "headSpace" are zero or if "ignoreHeader"
-// is true then don't perform these tests. This is because some protocols need 
+// is true then don't perform these tests. This is because some protocols need
 // to do their own custom header work.
-  uint64_t data = 0;  
-  bufIndex_t Max=recvGlobal.decodeLength-1; 
+  uint64_t data = 0;
+  bufIndex_t Max=recvGlobal.decodeLength-1;
   if (expectedLength) {
     if (recvGlobal.decodeLength != expectedLength) return RAW_COUNT_ERROR;
   }
@@ -109,10 +109,10 @@ bool IRdecodeBase::decodeGeneric(uint8_t expectedLength,
     offset++;
     if (MATCH(recvGlobal.decodeBuffer[offset],spaceOne)) {
       data = (data << 1) | 1;
-    } 
+    }
     else if (MATCH (recvGlobal.decodeBuffer[offset],spaceZero)) {
       data <<= 1;
-    } 
+    }
     else return DATA_SPACE_ERROR(spaceZero);
     offset++;
   }
@@ -123,15 +123,15 @@ bool IRdecodeBase::decodeGeneric(uint8_t expectedLength,
   return true;
 }
 
-/* 
+/*
  * These MATCH methods used to be macros but we saved nearly
  * 800 bytes of program space by making them actual methods.
  */
- 
+
 bool IRdecodeBase::MATCH(int16_t val,int16_t expected){
 #ifdef IRLIB_USE_PERCENT
   return (val >= (uint16_t)(expected*(1.0-PERCENT_TOLERANCE/100.0)))
-      && (val <= (uint16_t)(expected*(1.0+PERCENT_TOLERANCE/100.0))); 
+      && (val <= (uint16_t)(expected*(1.0+PERCENT_TOLERANCE/100.0)));
 #else
   return  ABS_MATCH(val,expected,DEFAULT_ABS_TOLERANCE);
 #endif
@@ -141,15 +141,15 @@ bool IRdecodeBase::ABS_MATCH(int16_t val,int16_t expected,int16_t tolerance){
 }
 
 /*
- * The RC5 and RC6 and similar protocols used phase encoding and leave a 
- * routine to extract zeros and ones. This routine gets one undecoded 
- * level at a time from the raw buffer. personally The RC5/6 decoding 
+ * The RC5 and RC6 and similar protocols used phase encoding and leave a
+ * routine to extract zeros and ones. This routine gets one undecoded
+ * level at a time from the raw buffer. personally The RC5/6 decoding
  * is easier if the data is broken into time intervals.
  * E.g. if the buffer has MARK for 2 time intervals and SPACE for 1,
  * successive calls to getRClevel will return MARK, MARK, SPACE.
- * The variables "offset" and "used" are updated to keep track of the 
- * current position. The variable "t1" is the time interval for a single 
- * bit in microseconds. Returns ERROR if the measured time interval is 
+ * The variables "offset" and "used" are updated to keep track of the
+ * current position. The variable "t1" is the time interval for a single
+ * bit in microseconds. Returns ERROR if the measured time interval is
  * not a multiple of "t1".
  */
 IRdecodeRC::RCLevel IRdecodeRC::getRClevel(uint8_t *used, const uint16_t t1) {
@@ -163,10 +163,10 @@ IRdecodeRC::RCLevel IRdecodeRC::getRClevel(uint8_t *used, const uint16_t t1) {
   uint8_t avail;
   if (MATCH(width, t1)) {
     avail = 1;
-  } 
+  }
   else if (MATCH(width, 2*t1)) {
     avail = 2;
-  } 
+  }
   else if (MATCH(width, 3*t1)) {
     avail = 3;
   } else {
@@ -181,7 +181,7 @@ IRdecodeRC::RCLevel IRdecodeRC::getRClevel(uint8_t *used, const uint16_t t1) {
     *used = 0;
     (offset)++;
   }
-  return val;   
+  return val;
 }
 
-#endif //!defined(__NRF52) 
+#endif //!defined(__NRF52)

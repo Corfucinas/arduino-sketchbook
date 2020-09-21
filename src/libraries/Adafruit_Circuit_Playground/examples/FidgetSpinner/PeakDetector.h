@@ -25,11 +25,11 @@ public:
       _filtered[i] = 0.0;
     }
   }
-  
+
   ~PeakDetector() {
     // Deallocate memory for samples.
     if (_filtered != NULL) {
-      delete[] _filtered;  
+      delete[] _filtered;
     }
   }
 

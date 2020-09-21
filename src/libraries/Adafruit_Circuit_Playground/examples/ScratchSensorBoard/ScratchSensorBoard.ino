@@ -53,7 +53,7 @@ void sendPacket(uint8_t channel, uint16_t data) {
 
   channel &= 0xF;
   if (data >= 1024) data = 1023;
-  
+
   packet0 = 0x80 | (channel << 3) | ((data >> 7) & 0x7);
   packet1 = data & 0x7F;
 

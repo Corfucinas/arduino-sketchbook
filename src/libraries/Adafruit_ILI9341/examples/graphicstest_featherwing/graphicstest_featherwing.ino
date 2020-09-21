@@ -83,8 +83,8 @@ void setup() {
   x = tft.readcommand8(ILI9341_RDIMGFMT);
   Serial.print("Image Format: 0x"); Serial.println(x, HEX);
   x = tft.readcommand8(ILI9341_RDSELFDIAG);
-  Serial.print("Self Diagnostic: 0x"); Serial.println(x, HEX); 
-  
+  Serial.print("Self Diagnostic: 0x"); Serial.println(x, HEX);
+
   Serial.println(F("Benchmark                Time (microseconds)"));
   delay(10);
   Serial.print(F("Screen fill              "));
@@ -197,7 +197,7 @@ unsigned long testLines(uint16_t color) {
 
   tft.fillScreen(ILI9341_BLACK);
   yield();
-  
+
   x1 = y1 = 0;
   y2    = h - 1;
   start = micros();

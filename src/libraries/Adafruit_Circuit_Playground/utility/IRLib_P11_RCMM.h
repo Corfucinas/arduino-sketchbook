@@ -2,14 +2,14 @@
  * Part of IRLib Library for Arduino receiving, decoding, and sending
  * infrared signals. See COPYRIGHT.txt and LICENSE.txt for more information.
  */
-/* This module implements the Phillips RC-MM also known as Nokia Protocol. Is used by 
+/* This module implements the Phillips RC-MM also known as Nokia Protocol. Is used by
  * AT&T U-Verse cable boxes. There are three different varieties that are 12, 24, or 32 bits.
  * According to http://www.hifi-remote.com/johnsfine/DecodeIR.html#Nokia
  * The IRP notation for these protocols are:
- * Nokia 12 bit: {36k,msb}<164,-276|164,-445|164,-614|164,-783>(412,-276,D:4,F:8,164,-???)+ 
- * Nokia 24-bit: {36k,msb}<164,-276|164,-445|164,-614|164,-783>(412,-276,D:8,S:8,F:8,164,-???)+ 
- * Nokia 32 bit: {36k,msb}<164,-276|164,-445|164,-614|164,-783>(412,-276,D:8,S:8,T:1X:7,F:8,164,^100m)+ 
- * Slightly different timing values are documented at 
+ * Nokia 12 bit: {36k,msb}<164,-276|164,-445|164,-614|164,-783>(412,-276,D:4,F:8,164,-???)+
+ * Nokia 24-bit: {36k,msb}<164,-276|164,-445|164,-614|164,-783>(412,-276,D:8,S:8,F:8,164,-???)+
+ * Nokia 32 bit: {36k,msb}<164,-276|164,-445|164,-614|164,-783>(412,-276,D:8,S:8,T:1X:7,F:8,164,^100m)+
+ * Slightly different timing values are documented at
  * http://www.sbprojects.com/knowledge/ir/rcmm.php
  * We will use the timing from the latter reference.
  * Unlike most protocols which defined sequences for a logical "0" and "1", this protocol
@@ -57,7 +57,7 @@ class IRsendRCMM: public virtual IRsendBase {
         }
         data <<= 2;
       };
-      mark(RCMM_DATA_MARK);  
+      mark(RCMM_DATA_MARK);
       space(27778-extent);
     };
 };
@@ -67,12 +67,12 @@ class IRsendRCMM: public virtual IRsendBase {
 /*
  * Normally IRLib uses a plus or minus percentage to determine if an interval matches the
  * desired value. However this protocol uses extremely long intervals of similar length.
- * For example using the default 25% tolerance the RCMM_TWO value 611 would be accepted for 
+ * For example using the default 25% tolerance the RCMM_TWO value 611 would be accepted for
  * anything between 458 and 763. The low end is actually closer to RCMM_ONE value of 444
  * and the upper range is closer to RCM_THREE value of 778. To implement this protocol
  * we created a new match routine ABS_MATCH which allows you to specify an absolute
  * number of microseconds of tolerance for comparison.
- */ 
+ */
 #define RCMM_TOLERANCE 80
 class IRdecodeRCMM: public virtual IRdecodeBase {
   public:
@@ -88,16 +88,16 @@ class IRdecodeRCMM: public virtual IRdecodeBase {
         offset++;
         if (ABS_MATCH(recvGlobal.decodeBuffer[offset],RCMM_ZERO, RCMM_TOLERANCE) ) { //Logical "0"
           data <<= 2;
-        } 
+        }
         else if (ABS_MATCH(recvGlobal.decodeBuffer[offset],RCMM_ONE, RCMM_TOLERANCE) ) { //Logical "1"
           data = (data<<2) + 1;
-        } 
+        }
         else if (ABS_MATCH(recvGlobal.decodeBuffer[offset],RCMM_TWO, RCMM_TOLERANCE) ) { //Logical "2"
           data = (data<<2) + 2;
-        } 
+        }
         else if (ABS_MATCH(recvGlobal.decodeBuffer[offset],RCMM_THREE, RCMM_TOLERANCE) ) { //Logical "3"
           data = (data<<2) + 3;
-        } 
+        }
         else return DATA_SPACE_ERROR(RCMM_ZERO);
         offset++;
       }

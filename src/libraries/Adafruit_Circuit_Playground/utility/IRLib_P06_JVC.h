@@ -3,11 +3,11 @@
  * infrared signals. See COPYRIGHT.txt and LICENSE.txt for more information.
  */
 /*
- * JVC omits the mark/space header on repeat sending. Therefore we multiply 
+ * JVC omits the mark/space header on repeat sending. Therefore we multiply
  * it by 0 if it's a repeat. The only device I had to test this protocol was
- * an old JVC VCR. It would only work if at least 2 frames are sent separated 
- * by 45 time periods of "space". Therefore you should call this routine once 
- * with "first=true" and it will send a first frame followed by one repeat 
+ * an old JVC VCR. It would only work if at least 2 frames are sent separated
+ * by 45 time periods of "space". Therefore you should call this routine once
+ * with "first=true" and it will send a first frame followed by one repeat
  * frame. If First==false, it will only send a single repeat frame.
  */
 
@@ -60,7 +60,7 @@ class IRdecodeJVC: public virtual IRdecodeBase {
           bits++;
         }
         else return RAW_COUNT_ERROR;
-      } 
+      }
       address=(recvGlobal.decodeLength==36);
       protocolNum =JVC;
       return true;

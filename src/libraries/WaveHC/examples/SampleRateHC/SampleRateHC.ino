@@ -28,7 +28,7 @@ void setup() {
   }
   // enable optimize read - some cards may timeout
   card.partialBlockRead(true);
-  
+
   if (!vol.init(card)) {
     error("No partition!");
   }
@@ -43,28 +43,28 @@ void setup() {
 void playcomplete(FatReader &file);
 
 //////////////////////////////////// LOOP
-void loop() { 
+void loop() {
   uint8_t i, r;
   char c, name[15];
   dir_t dir;
 
   root.rewind();
   // scroll through the files in the directory
-  while (root.readDir(dir) > 0) { 
+  while (root.readDir(dir) > 0) {
     // only play .WAV files
     if (strncmp_P((char *)&dir.name[8],PSTR("WAV"), 3)) continue;
-    
+
     if (!file.open(vol, dir)){
       putstring("Can't open ");
       printEntryName(dir);
       Serial.println();
       continue;
     }
-    putstring("\n\rPlaying "); 
+    putstring("\n\rPlaying ");
     printEntryName(dir);
     Serial.println();
     playcomplete(file);
-    file.close();    
+    file.close();
   }
 }
 /////////////////////////////////// HELPERS
@@ -96,18 +96,18 @@ int16_t lastpotval = 0;
 void playcomplete(FatReader &file) {
   int16_t potval;
   uint32_t newsamplerate;
-  
+
    if (!wave.create(file)) {
      putstring_nl(" Not a valid WAV"); return;
    }
    // ok time to play!
    wave.play();
-   
+
   while (wave.isplaying) {
      potval = analogRead(0);
      if ( ((potval - lastpotval) > HYSTERESIS) || ((lastpotval - potval) > HYSTERESIS)) {
          putstring("pot = ");
-         Serial.println(potval, DEC); 
+         Serial.println(potval, DEC);
          putstring("tickspersam = ");
          Serial.print(wave.dwSamplesPerSec, DEC);
          putstring(" -> ");
@@ -115,13 +115,13 @@ void playcomplete(FatReader &file) {
          newsamplerate *= potval;
          newsamplerate /= 512;   // we want to 'split' between sped up and slowed down.
         if (newsamplerate > 24000) {
-          newsamplerate = 24000;  
+          newsamplerate = 24000;
         }
         if (newsamplerate < 1000) {
-          newsamplerate = 1000;  
-        }        
+          newsamplerate = 1000;
+        }
         wave.setSampleRate(newsamplerate);
-        
+
         Serial.println(newsamplerate, DEC);
         lastpotval = potval;
      }

@@ -34,8 +34,8 @@ Adafruit_GPS GPS(&GPSSerial);
 
 #ifdef NMEA_EXTENSIONS
 // Create another GPS object to hold the state of the boat, with no
-// communications, so you don't need to call Boat.begin() in setup. 
-// We will build some fake sentences from the Boat data to feed to 
+// communications, so you don't need to call Boat.begin() in setup.
+// We will build some fake sentences from the Boat data to feed to
 // GPS for testing.
 Adafruit_GPS Boat;
 #endif

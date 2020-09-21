@@ -11,8 +11,8 @@ class CapTouchDemo: public Demo {
 public:
   uint16_t CAP_THRESHOLD = 200;  // Threshold for a capacitive touch (higher = less sensitive).
 
-  CapTouchDemo() { 
-    playSound = false; 
+  CapTouchDemo() {
+    playSound = false;
     if (CircuitPlayground.isExpress()) {
       CAP_THRESHOLD = 800;
     } else {
@@ -21,13 +21,13 @@ public:
   }
   ~CapTouchDemo() {}
 
-  
+
   virtual void loop() {
     // Clear all the neopixels.
     for (int i=0; i<10; ++i) {
       CircuitPlayground.strip.setPixelColor(i, 0);
     }
-    
+
     // Check if any of the cap touch inputs are pressed and turn on those pixels.
     // Also play a tone if in tone playback mode.
     if (CircuitPlayground.readCap(0, CAP_SAMPLES) >= CAP_THRESHOLD) {

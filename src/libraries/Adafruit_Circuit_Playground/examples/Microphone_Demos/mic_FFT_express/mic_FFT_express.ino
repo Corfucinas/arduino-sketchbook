@@ -1,8 +1,8 @@
-/* This example shows how to use the FFT library with a Circuit Playground 
- * Express. Requires installing the "Adafruit Zero FFT library" (use the 
+/* This example shows how to use the FFT library with a Circuit Playground
+ * Express. Requires installing the "Adafruit Zero FFT library" (use the
  * Arduino Library Manager to install it!
  *
- *  The LEDs will map around the circle when frequencies between FREQ_MIN 
+ *  The LEDs will map around the circle when frequencies between FREQ_MIN
  *  and FREQ_MAX are detected
  */
 
@@ -79,7 +79,7 @@ void loop() {
   // Scale for FFT
   for(i=0; i<DATA_SIZE; i++)
     inputData[i] = (inputData[i] - avg) * SCALE_FACTOR;
-  
+
   //run the FFT
   ZeroFFT(inputData, DATA_SIZE);
 

@@ -20,7 +20,7 @@
 #include "CPlay_CapacitiveSensor.h"
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Function that handles the creation and setup of instances
     @param sendPin send pin for the sensor
     @param receivePin the receiving pin for the sensor
@@ -34,7 +34,7 @@ CPlay_CapacitiveSensor::CPlay_CapacitiveSensor(uint8_t sendPin, uint8_t receiveP
 
 	CS_Timeout_Millis = (2000 * (float)loopTimingFactor * (float)F_CPU) / 16000000;
 	CS_AutocaL_Millis = 20000;
-	
+
 	_sendPin = sendPin;
 	_receivePin = receivePin;
 
@@ -86,7 +86,7 @@ CPlay_CapacitiveSensor::CPlay_CapacitiveSensor(uint8_t sendPin, uint8_t receiveP
 
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  get a capacitive sensor reading
     @param samples number of samples to take
     @return the sensor reading
@@ -105,28 +105,28 @@ long CPlay_CapacitiveSensor::capacitiveSensor(uint8_t samples)
   for (uint8_t i = 0; i < samples; i++) {    // loop for samples parameter - simple lowpass filter
     if (SenseOneCycle() < 0)  return -2;   // variable over timeout
   }
-	
+
   // only calibrate if time is greater than CS_AutocaL_Millis and total is less than 10% of baseline
   // this is an attempt to keep from calibrating when the sensor is seeing a "touched" signal
-  
-  if ( (millis() - lastCal > CS_AutocaL_Millis) && 
+
+  if ( (millis() - lastCal > CS_AutocaL_Millis) &&
        abs(total  - leastTotal) < (int)(.10 * (float)leastTotal) ) {
-    
+
     // Serial.println();               // debugging
     // Serial.println("auto-calibrate");
     // Serial.println();
     // delay(2000); */
-    
+
     leastTotal = 0x0FFFFFFFL;          // reset for "autocalibrate"
     lastCal = millis();
   }
   /*else{                                // debugging
     Serial.print("  total =  ");
     Serial.print(total);
-    
+
     Serial.print("   leastTotal  =  ");
     Serial.println(leastTotal);
-    
+
     Serial.print("total - leastTotal =  ");
     x = total - leastTotal ;
     Serial.print(x);
@@ -134,14 +134,14 @@ long CPlay_CapacitiveSensor::capacitiveSensor(uint8_t samples)
     x = (int)(.1 * (float)leastTotal);
     Serial.println(x);
     } */
-  
+
   // routine to subtract baseline (non-sensed capacitance) from sensor return
   if (total < leastTotal) leastTotal = total;                 // set floor value to subtract from sensed value
   return(total - leastTotal);
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  get a raw sensor reading
     @param samples the number of samples to take
     @return -1 for error, -2 for timeout, other values are a raw sensor reading
@@ -152,16 +152,16 @@ long CPlay_CapacitiveSensor::capacitiveSensorRaw(uint8_t samples)
   total = 0;
   if (samples == 0) return 0;
   if (error < 0) return -1;                  // bad pin - this appears not to work
-  
+
   for (uint8_t i = 0; i < samples; i++) {    // loop for samples parameter - simple lowpass filter
     if (SenseOneCycle() < 0)  return -2;   // variable over timeout
   }
-  
+
   return total;
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  reset the auto calibration
 */
 /**************************************************************************/
@@ -170,7 +170,7 @@ void CPlay_CapacitiveSensor::reset_CS_AutoCal(void){
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief set the auto-calibration time
     @param autoCal_millis the desired calibration time in milliseconds
 */
@@ -180,7 +180,7 @@ void CPlay_CapacitiveSensor::set_CS_AutocaL_Millis(unsigned long autoCal_millis)
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  set the sensor timeout
     @param timeout_millis the number of milliseconds to set the timeout to
 */
@@ -193,7 +193,7 @@ void CPlay_CapacitiveSensor::set_CS_Timeout_Millis(unsigned long timeout_millis)
 // Functions only available to other functions in this library
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  sense a single sicle
     @return the reading
 */
@@ -210,12 +210,12 @@ int CPlay_CapacitiveSensor::SenseOneCycle(void)
     *recv_direction &= ~recv_mask;	// receivePin to input (pullups are off)
     *send_outport |= send_mask;           // sendPin Register high
     interrupts();
-    
+
     while ( !(*recv_inport & recv_mask) && (total < CS_Timeout_Millis) ) {  // while receive pin is LOW AND total is positive value
       total++;
     }
     //Serial.print("SenseOneCycle(1): "); Serial.println(total);
-    
+
     if (total > CS_Timeout_Millis) {
       return -2;         //  total variable over timeout
     }
@@ -233,7 +233,7 @@ int CPlay_CapacitiveSensor::SenseOneCycle(void)
     *send_outport &= ~send_mask;           // sendPin Register high
   }
   interrupts();
-  
+
   while ((*recv_inport & recv_mask) && (total < CS_Timeout_Millis) ) {
     total++; // while receive pin is HIGH  AND total is less than timeout
   }

@@ -9,9 +9,9 @@ void setup() {
 
 void loop() {
   value = CircuitPlayground.lightSensor();
-  
+
   Serial.print("Light Sensor: ");
   Serial.println(value);
-  
+
   delay(1000);
 }

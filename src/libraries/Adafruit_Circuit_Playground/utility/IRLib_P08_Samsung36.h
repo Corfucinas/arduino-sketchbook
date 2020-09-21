@@ -8,7 +8,7 @@
  * It consists of a 16 bit address and 20 bits of data with strange timing in between.
  */
 /* The IRP notation for this protocol is:
- * {38k,500}<1,-1|1,-3>(9,-9,D:8,S:8,1,-9,E:4,F:8,-68u,~F:8,1,-118)+ 
+ * {38k,500}<1,-1|1,-3>(9,-9,D:8,S:8,1,-9,E:4,F:8,-68u,~F:8,1,-118)+
  * This means it uses 38k frequency. Base timing is multiples of 500.
  * A "0" is mark(500) space(500). A "1" is mark (500) space(500*3)
  * The header is mark(500*9) space(500*9).
@@ -49,8 +49,8 @@ class IRsendSamsung36: public virtual IRsendBase {
     };
   private:
     /* Because not all of the data bits are contiguous in the stream,
-    * we created this little routine to be called multiple times to send a 
-    * segment of the data. 
+    * we created this little routine to be called multiple times to send a
+    * segment of the data.
     */
     void putBits (uint32_t data, uint8_t nbits) {
       for (uint8_t i = 0; i < nbits; i++) {
@@ -103,9 +103,9 @@ class IRdecodeSamsung36: public virtual IRdecodeBase {
       while (offset < last_offset) {
         if (!MATCH(recvGlobal.decodeBuffer[offset],500)) return DATA_MARK_ERROR(500);
         offset++;
-        if (MATCH(recvGlobal.decodeBuffer[offset],500*3)) 
+        if (MATCH(recvGlobal.decodeBuffer[offset],500*3))
           data = (data << 1) | 1;
-        else if (MATCH(recvGlobal.decodeBuffer[offset],500)) 
+        else if (MATCH(recvGlobal.decodeBuffer[offset],500))
           data <<= 1;
         else return DATA_SPACE_ERROR(500*3);
         offset++;

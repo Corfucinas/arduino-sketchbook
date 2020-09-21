@@ -22,7 +22,7 @@
 SdReader card;    // This object holds the information for the card
 FatVolume vol;    // This holds the information for the partition on the card
 FatReader root;   // This holds the information for the volumes root directory
-FatReader file;   // This object represent the WAV file 
+FatReader file;   // This object represent the WAV file
 WaveHC wave;      // This is the only wave (audio) object, since we will only play one at a time
 
 // time to play each tone in milliseconds
@@ -88,32 +88,32 @@ void sdErrorCheck(void) {
 // Most phones don't have A, B, C, and D tones.
 // file names are of the form DTMFx.WAV where x is one of
 // the letters from fileLetter[]
-char fileLetter[] =  {'0', '1', '2', '3', '4', '5', '6', 
-      '7', '8', '9', 'A', 'B', 'C', 'D', 'P', 'S'}; 
-      
+char fileLetter[] =  {'0', '1', '2', '3', '4', '5', '6',
+      '7', '8', '9', 'A', 'B', 'C', 'D', 'P', 'S'};
+
 // index of DTMF files in the root directory
 uint16_t fileIndex[FILE_COUNT];
 /*
  * Find files and save file index.  A file's index is is the
- * index of it's directory entry in it's directory file. 
+ * index of it's directory entry in it's directory file.
  */
 void indexFiles(void) {
   char name[10];
-  
+
   // copy flash string to RAM
   strcpy_P(name, PSTR("DTMFx.WAV"));
-  
+
   for (uint8_t i = 0; i < FILE_COUNT; i++) {
-    
+
     // Make file name
     name[4] = fileLetter[i];
-    
+
     // Open file by name
     if (!file.open(root, name)) error("open by name");
-    
+
     // Save file's index (byte offset of directory entry divided by entry size)
     // Current position is just after entry so subtract one.
-    fileIndex[i] = root.readPosition()/32 - 1;   
+    fileIndex[i] = root.readPosition()/32 - 1;
   }
   PgmPrintln("Done");
 }
@@ -122,26 +122,26 @@ void indexFiles(void) {
  */
 void playByIndex(void) {
   for (uint8_t i = 0; i < FILE_COUNT; i++) {
-    
+
     // start time
     uint32_t t = millis();
-    
+
     // open by index
     if (!file.open(root, fileIndex[i])) {
       error("open by index");
     }
-    
+
     // create and play Wave
     if (!wave.create(file)) error("wave.create");
     wave.play();
-    
+
     // print time to open file and start play
     Serial.println(millis() - t);
-    
+
     // stop after PLAY_TIME ms
     while((millis() - t) < PLAY_TIME);
     wave.stop();
-    
+
     // check for play errors
     sdErrorCheck();
   }
@@ -152,31 +152,31 @@ void playByIndex(void) {
  */
 void playByName(void) {
   char name[10];
-  
+
   // copy flash string to RAM
   strcpy_P(name, PSTR("DTMFx.WAV"));
-  
+
   for (uint8_t i = 0; i < FILE_COUNT; i++) {
     // start time
     uint32_t t = millis();
-    
+
     // make file name
     name[4] = fileLetter[i];
-    
+
     // open file by name
-    if (!file.open(root, name)) error("open by name"); 
-    
+    if (!file.open(root, name)) error("open by name");
+
     // create wave and start play
     if (!wave.create(file))error("wave.create");
     wave.play();
-    
+
     // print time
     Serial.println(millis() - t);
-    
+
     // stop after PLAY_TIME ms
     while((millis() - t) < PLAY_TIME);
     wave.stop();
-    
+
     // check for play errors
     sdErrorCheck();
   }

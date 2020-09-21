@@ -27,7 +27,7 @@ void setup() {
   delay(100);
   GPS.begin(100000);  // use 100kHz for SPI data rate
   GPS.println(PMTK_SET_NMEA_UPDATE_10HZ);
-  GPS.println(PMTK_SET_NMEA_OUTPUT_ALLDATA); 
+  GPS.println(PMTK_SET_NMEA_OUTPUT_ALLDATA);
 }
 
 

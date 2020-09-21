@@ -1,8 +1,8 @@
-/*************************************************** 
+/***************************************************
   This is an example for the Adafruit STMPE610 Resistive
   touch screen controller breakout
   ----> http://www.adafruit.com/products/1571
- 
+
   Check out the links above for our tutorials and wiring diagrams
   These breakouts use SPI or I2C to communicate
 
@@ -41,7 +41,7 @@ Adafruit_STMPE610 touch = Adafruit_STMPE610();
 
 /******************/
 
-void setup() { 
+void setup() {
   Serial.begin(9600);
   Serial.println("Adafruit STMPE610 example");
   Serial.flush();
@@ -68,9 +68,9 @@ void loop() {
     while (! touch.bufferEmpty()) {
       Serial.print(touch.bufferSize());
       touch.readData(&x, &y, &z);
-      Serial.print("->("); 
-      Serial.print(x); Serial.print(", "); 
-      Serial.print(y); Serial.print(", "); 
+      Serial.print("->(");
+      Serial.print(x); Serial.print(", ");
+      Serial.print(y); Serial.print(", ");
       Serial.print(z);
       Serial.println(")");
     }

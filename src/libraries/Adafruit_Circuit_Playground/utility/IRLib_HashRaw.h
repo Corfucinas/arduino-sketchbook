@@ -4,14 +4,14 @@
  */
 /*
  * If you have a protocol which is unsupported by this library, you can still receive
- * and transmit the data. You can store the raw data values in a buffer and retransmit the 
+ * and transmit the data. You can store the raw data values in a buffer and retransmit the
  * data exactly as you received it. Of course it takes a lot of memory to store such data
  * so it is inefficient but it is better than nothing.
  * If all you need to do is detect a unique value for an unsupported protocol and you do
  * not need to resend the data, you can use the hash code decoder. It looks at the
  * array of raw timing values and create a 32 bit value based on the data. It is
  * highly likely to be unique however you cannot reverse engineer the process.
- * You cannot re-create the original data stream for 32 bit hash code. 
+ * You cannot re-create the original data stream for 32 bit hash code.
  * This module also implements the raw send method. You have to have the original
  * timing values.
  */
@@ -43,7 +43,7 @@ class IRsendRaw: public virtual IRsendBase {
       for (uint8_t i = 0; i < len; i++) {
         if (i & 1) {
           space(buf[i]);
-        } 
+        }
         else {
           mark(buf[i]);
         }

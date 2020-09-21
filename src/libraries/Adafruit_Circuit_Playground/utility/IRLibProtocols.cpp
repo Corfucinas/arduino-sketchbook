@@ -1,4 +1,4 @@
-/* IRLibProtocols.cpp 
+/* IRLibProtocols.cpp
  * Part of IRLib Library for Arduino receiving, decoding, and sending
  * infrared signals. See COPYRIGHT.txt and LICENSE.txt for more information.
  */
@@ -13,7 +13,7 @@
 #include "IRLibProtocols.h"
 
 /*
- * Returns a pointer to a flash stored string that is the name of the protocol received. 
+ * Returns a pointer to a flash stored string that is the name of the protocol received.
  */
 const __FlashStringHelper *Pnames(uint8_t type) {
   if(type>89) return F("Unsup");

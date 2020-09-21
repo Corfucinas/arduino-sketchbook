@@ -43,7 +43,7 @@ void setup(){
 #endif
   TinyWireM.begin();                    // initialize I2C lib
   Init_Temp();                          // Setup DS1621
-  lcd.init();                           // initialize the lcd 
+  lcd.init();                           // initialize the lcd
   lcd.backlight();                      // Print a message to the LCD.
   lcd.print("Hello, Temp!");
   delay (2000);
@@ -96,7 +96,7 @@ void Get_Temp(){  // Get the temperature from a DS1621
   TinyWireM.endTransmission();          // Send 1 byte to the slave
   TinyWireM.requestFrom(DS1621_ADDR,1); // Request 1 byte from slave
   tempC = TinyWireM.receive();          // get the temperature
-  tempF = tempC * 9 / 5 + 32;           // convert to Fahrenheit 
+  tempF = tempC * 9 / 5 + 32;           // convert to Fahrenheit
 }
 
 
@@ -105,9 +105,9 @@ void Get_Time(){         // get the time and date from the DS1307 chip
   memset(timeString,0,sizeof(timeString));  // initialize the strings
   memset(dateString,0,sizeof(dateString));
 
-  TinyWireM.beginTransmission(DS1307_ADDR); // reset DS1307 register pointer 
-  TinyWireM.send(0); 
-  wireRet = TinyWireM.endTransmission(); 
+  TinyWireM.beginTransmission(DS1307_ADDR); // reset DS1307 register pointer
+  TinyWireM.send(0);
+  wireRet = TinyWireM.endTransmission();
   if (wireRet) {                            // report any send esrrors
     lcd.clear();
     lcd.print("SendError: ");
@@ -126,21 +126,21 @@ void Get_Time(){         // get the time and date from the DS1307 chip
   lcd.print("Before Reads: ");
   lcd.print(TinyWireM.available(),DEC);     // testing TinyWireM.available()
   delay(1500);
-#endif    
+#endif
   seconds = bcdToDec(TinyWireM.receive());  // handle the 7 bytes received
-  minutes = bcdToDec(TinyWireM.receive());      
-  hours = bcdToDec(TinyWireM.receive());        
-  day_of_week = TinyWireM.receive();    
-  days = bcdToDec(TinyWireM.receive());          
-  months = bcdToDec(TinyWireM.receive());      
-  years = bcdToDec(TinyWireM.receive());  
+  minutes = bcdToDec(TinyWireM.receive());
+  hours = bcdToDec(TinyWireM.receive());
+  day_of_week = TinyWireM.receive();
+  days = bcdToDec(TinyWireM.receive());
+  months = bcdToDec(TinyWireM.receive());
+  years = bcdToDec(TinyWireM.receive());
 #ifdef DEBUG
   lcd.clear();
   lcd.print("After Reads: ");
   lcd.print(TinyWireM.available(),DEC);     // testing TinyWireM.available()
   delay(1500);
-#endif    
-  // deal with AM/PM global and 12 hour clock 
+#endif
+  // deal with AM/PM global and 12 hour clock
   if (hours >= 12) PM = true;
   else PM = false;
   if (hours > 12)hour12 = hours - 12;

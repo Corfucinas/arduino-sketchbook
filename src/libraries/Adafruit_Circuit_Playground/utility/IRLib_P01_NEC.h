@@ -1,4 +1,4 @@
-/* IRLib_P01_NEC.h 
+/* IRLib_P01_NEC.h
  * Part of IRLib Library for Arduino receiving, decoding, and sending
  * infrared signals. See COPYRIGHT.txt and LICENSE.txt for more information.
  */
@@ -7,14 +7,14 @@
  * They differ only in the way in which they handle repeat codes.  If you hold a button
  * using NEC1 it does not repeat the same sequence. Rather it sends a special sequence
  * consisting of the usual header mark, a half-size header space, a normal mark.
- * When IRLib receives one of these special repeat sequences, it returns the 
+ * When IRLib receives one of these special repeat sequences, it returns the
  * value REPEAT_CODE which is defined in IRLibProtocols.h as the value 0xffffffff. If you
  * send REPEAT_CODE, the send routine will create a special sequence for you.
  * NOTE that the timing for this special did sequence is nearly identical to a ditto
  * used by the G.I.Cable protocol and IRLib generally not distinguish between the two.
  * The header timing for G.I. Cable ditto is 8820,1960 and for NEC is 9024,2256
- * If you are using both protocols and you receive an NEC ditto immediately after 
- * receiving a G.I.Cable then you should presume it is a G.I.Cable and vice versa. 
+ * If you are using both protocols and you receive an NEC ditto immediately after
+ * receiving a G.I.Cable then you should presume it is a G.I.Cable and vice versa.
  * Whether it is a normal code or a repeat code the entire frame has a 108ms extent.
  * The IRP notation for these protocols are:
  * NEC1: {38k,564}<1,-1|1,-3>(16,-8,D:8,S:8,F:8,~F:8,1,^108,(16,-4,1,^108)*)
@@ -59,7 +59,7 @@ class IRdecodeNEC: public virtual IRdecodeBase {
       resetDecoder();//This used to be in the receiver getResults.
       IRLIB_ATTEMPT_MESSAGE(F("NEC repeat"));
       // Check for repeat
-      if (recvGlobal.decodeLength == 4 && MATCH(recvGlobal.decodeBuffer[1],564*16) && MATCH(recvGlobal.decodeBuffer[2],564*4) 
+      if (recvGlobal.decodeLength == 4 && MATCH(recvGlobal.decodeBuffer[1],564*16) && MATCH(recvGlobal.decodeBuffer[2],564*4)
           && MATCH(recvGlobal.decodeBuffer[3],564)) {
         bits = 0;
         value = REPEAT_CODE;

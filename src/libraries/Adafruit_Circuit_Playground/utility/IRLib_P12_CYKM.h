@@ -1,16 +1,16 @@
 /* IRLib_P12_CYKM.h
-  Chris Young keyboard mouse protocol 
-  See COPYRIGHT.txt and LICENSE.txt for license information (spoilers it's GPL 3) 
-  
-  This library implements a custom protocol for IRLib to assist in creating 
+  Chris Young keyboard mouse protocol
+  See COPYRIGHT.txt and LICENSE.txt for license information (spoilers it's GPL 3)
+
+  This library implements a custom protocol for IRLib to assist in creating
   Arduino based mouse and keyboard controls. Documentation will be updated soon.
-  
+
   Protocol information: Header 3100, 3100
-      Zero bit: 650, 650, 
+      Zero bit: 650, 650,
       One bit:  650*3, 650, 38 kHz, stop=true
       15 bits of data which means 34 intervals of marks and spaces
   Description of bits high order to low order
-    3 bits: Command: 3 bits 
+    3 bits: Command: 3 bits
       0 mouse click
       1 mouse hold
       2 mouse move
@@ -19,7 +19,7 @@
       5 keyboard write
       6 speed command
       7 Custom devices
-    4 bits: Modifier one time use. Only valid for mouse click, 
+    4 bits: Modifier one time use. Only valid for mouse click,
             mouse hold and keyboard write and hold not toggles
       1 Shift
       2 Control
@@ -30,10 +30,10 @@
         1 left click
         2 right click
         4 middle click
-      If mouse move 
+      If mouse move
         1 right, 2 left, 4 up, 8 down
         0x10 wheel up, 0x20 wheel down
-        0x40 increase speed, 0x80 decrease speed    
+        0x40 increase speed, 0x80 decrease speed
       If keyboard hold or key write then ASCII or Arduino code
       If speed command = absolute speed 0 to 255
       If Toggle 255= clear everything
@@ -115,17 +115,17 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
       switch (cmdType) {
         case CYKM_MOUSE_CLICK: //deliberate fall through
         case CYKM_MOUSE_HOLD:
-          Serial.print(F("Mouse ")); 
+          Serial.print(F("Mouse "));
           showMods();
           switch(cmdData) {
-            case CYKM_LEFT_BUTTON: Serial.print(F("left"));break;  
-            case CYKM_RIGHT_BUTTON: Serial.print(F("right"));break;  
-            case CYKM_MIDDLE_BUTTON: Serial.print(F("middle"));break;  
-            default: Serial.println(F("ERROR"));  
+            case CYKM_LEFT_BUTTON: Serial.print(F("left"));break;
+            case CYKM_RIGHT_BUTTON: Serial.print(F("right"));break;
+            case CYKM_MIDDLE_BUTTON: Serial.print(F("middle"));break;
+            default: Serial.println(F("ERROR"));
           };
           if (cmdType==CYKM_MOUSE_CLICK)Serial.println(F(" click")); else Serial.println(F(" hold"));
           break;
-        case CYKM_MOUSE_MOVE: 
+        case CYKM_MOUSE_MOVE:
           if(cmdData & (CYKM_DIR_RIGHT|CYKM_DIR_LEFT|CYKM_DIR_UP|CYKM_DIR_DOWN)){
             Serial.print(F("Mouse move "));
             if(cmdData & CYKM_DIR_RIGHT) Serial.print(F("right ")); else if(cmdData & CYKM_DIR_LEFT) Serial.print(F("left "));
@@ -136,7 +136,7 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
               if(cmdData & CYKM_DIR_UP) Serial.print(F("up ")); else Serial.print(F("down "));
             } else {
               if (cmdData & CYKM_SPEED_DECREASE) {
-                Serial.print(F("Decrease speed from ")); 
+                Serial.print(F("Decrease speed from "));
               } else {
                 if (cmdData & CYKM_SPEED_INCREASE) {
                   Serial.print(F("Increase speed from "));
@@ -145,8 +145,8 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
             };
           };
           Serial.println(mouseSpeed,DEC);
-          break;  
-        case CYKM_TOGGLE: 
+          break;
+        case CYKM_TOGGLE:
           Serial.print(F("Toggle"));
           if(cmdData==CYKM_TOGGLE_RESET) {
             Serial.print(F(" clear all"));
@@ -160,44 +160,44 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
             if(cmdData & CYKM_TOGGLE_GUI) Serial.print(F(" GUI"));
           }
           Serial.print(F(" Bits= "));Serial.println(toggleData,HEX);
-          break;  
+          break;
         case CYKM_KEY_WRITE:
         case CYKM_KEY_HOLD:
           if (cmdType==CYKM_KEY_WRITE) {
             Serial.print(F("Key write"));showMods();
           } else {
-          Serial.print(F("Key hold")); 
+          Serial.print(F("Key hold"));
           };
           Serial.print(F(" value:")); Serial.print(cmdData,HEX); Serial.print("  "); Serial.print(cmdData,DEC);
           if((cmdData>31) && (cmdData< 128)) {Serial.print(" '"); Serial.write(cmdData);Serial.print("'");};
           Serial.println();
-          break;  
+          break;
         case CYKM_SPEED:
           Serial.print(F("Change speed to:")); Serial.println(cmdData,DEC);
           break;
         case CYKM_CUSTOM_DEVICE: Serial.print(F("Custom Device data:")); Serial.println(cmdData,HEX);
       };
 
-    };  
+    };
     void doMouseKeyboard(void){
       #if defined(__AVR_ATmega32U4__) || defined(ARDUINO_SAM_DUE) || defined(ARDUINO_SAM_ZERO)
-      int8_t Button; 
+      int8_t Button;
       int8_t xDir=0; int8_t yDir=0; int8_t wDir=0;
       switch (cmdType) {
         case CYKM_MOUSE_CLICK: //deliberate fall through
         case CYKM_MOUSE_HOLD:
           doMods (true); //presses modifier key
           switch(cmdData) {
-            case CYKM_LEFT_BUTTON: Button= MOUSE_LEFT; break;  
-            case CYKM_RIGHT_BUTTON: Button= MOUSE_RIGHT; break;  
-            case CYKM_MIDDLE_BUTTON: Button= MOUSE_MIDDLE; break;  
+            case CYKM_LEFT_BUTTON: Button= MOUSE_LEFT; break;
+            case CYKM_RIGHT_BUTTON: Button= MOUSE_RIGHT; break;
+            case CYKM_MIDDLE_BUTTON: Button= MOUSE_MIDDLE; break;
           };
           //only release if this was a click and not a hold
           if (cmdType==CYKM_MOUSE_CLICK) {
             Mouse.click(Button); doMods(false);
           } else Mouse.press(Button);
           break;
-        case CYKM_MOUSE_MOVE: 
+        case CYKM_MOUSE_MOVE:
           if(cmdData & CYKM_DIR_RIGHT) xDir=mouseSpeed; else if(cmdData & CYKM_DIR_LEFT)   xDir= -mouseSpeed;
           //NOTE: Upper left corner is 0, 0 and positive numbers go down
           if(cmdData & CYKM_DIR_UP)    yDir=-mouseSpeed; else if(cmdData & CYKM_DIR_DOWN)   yDir= mouseSpeed;
@@ -208,8 +208,8 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
               if ( (cmdData & CYKM_SPEED_DECREASE) && (mouseSpeed>0) ) mouseSpeed--;
               if ( (cmdData & CYKM_SPEED_INCREASE) && (mouseSpeed<=255) ) mouseSpeed++;
           };
-          break;  
-        case CYKM_TOGGLE: 
+          break;
+        case CYKM_TOGGLE:
           if(cmdData==CYKM_TOGGLE_RESET) {
             Mouse.release(MOUSE_LEFT);
             Mouse.release(MOUSE_RIGHT);
@@ -227,7 +227,7 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
             if(cmdData & CYKM_TOGGLE_GUI)  {if(toggleData & CYKM_TOGGLE_GUI) Keyboard.release(KEY_LEFT_GUI);else Keyboard.press(KEY_LEFT_GUI);};
             toggleData= toggleData ^ cmdData;
           }
-          break;  
+          break;
         case CYKM_KEY_WRITE:
           doMods(true); //press modifier key
           Keyboard.write(cmdData);
@@ -237,11 +237,11 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
           doMods(true);//press modifier key
           Keyboard.press(cmdData);
           //Do not release modifier
-          break;  
+          break;
         case CYKM_SPEED:
           mouseSpeed=cmdData;
           break;
-//      case CYKM_CUSTOM_DEVICE: 
+//      case CYKM_CUSTOM_DEVICE:
 //        break;
       };
       #endif
@@ -263,7 +263,7 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
       if(value & CYKM_CONTROL) Serial.print(F(" control"));
       if(value & CYKM_ALT) Serial.print(F(" alt"));
       if(value & CYKM_GUI) Serial.print(F(" GUI"));
-    };  
+    };
     void doMods(bool Press){
       #if defined(__AVR_ATmega32U4__) || defined(ARDUINO_SAM_DUE) || defined(ARDUINO_SAM_ZERO)
         if(value & CYKM_SHIFT) {if(Press) Keyboard.press(KEY_LEFT_SHIFT); else Keyboard.release(KEY_LEFT_SHIFT);}
@@ -283,7 +283,7 @@ class IRdecodeCYKM: public virtual IRdecodeBase {
 
 #define IRLIB_HAVE_COMBO
 /*
-  If you have a board capable of using the "Keyboard.h" library 
+  If you have a board capable of using the "Keyboard.h" library
   such as a Leonardo then these defines are already defined.
   However suppose you want to transmit a signal for the up arrow
   from an Arduino Uno you would need to look up the value.

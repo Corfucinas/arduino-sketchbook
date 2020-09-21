@@ -1,4 +1,4 @@
-/* IRLibRecvPCI.h 
+/* IRLibRecvPCI.h
  * Part of IRLib Library for Arduino receiving, decoding, and sending
  * infrared signals. See COPYRIGHT.txt and LICENSE.txt for more information.
  *
@@ -10,10 +10,10 @@
  * this receiver occasionally fails to receive the second of 2 quickly sent frames.
  * If you do not have sufficient RAM for a second buffer you should consider using the
  * other two available receiver classes.
- * Applications that do sending only SHOULD NOT include this header.  
+ * Applications that do sending only SHOULD NOT include this header.
  *
  * This receiver is based in part on Arduino firmware for use with AnalysIR IR signal analysis
- * software for Windows PCs. Many thanks to the people at http://analysir.com for their 
+ * software for Windows PCs. Many thanks to the people at http://analysir.com for their
  * assistance in developing this section of code.
  */
 
@@ -23,7 +23,7 @@
 
 class IRrecvPCI: public IRrecvBase {
 public:
-  IRrecvPCI(void){};  //Use only when receiver object is part of larger object. 
+  IRrecvPCI(void){};  //Use only when receiver object is part of larger object.
                       // Still must initialize using constructor below.
   IRrecvPCI(uint8_t pin);
   void enableIRIn(void); //call to initialize or resume receiving

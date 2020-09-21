@@ -16,7 +16,7 @@
 
 /* Update by K. Townsend (Adafruit Industries) for lighter typedefs, and
  * extended sensor support to include color, voltage and current */
- 
+
 #ifndef _ADAFRUIT_SENSOR_H
 #define _ADAFRUIT_SENSOR_H
 
@@ -136,7 +136,7 @@ typedef struct
 } sensor_t;
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Sensor API class for CircuitPlayground board
 */
 /**************************************************************************/
@@ -149,7 +149,7 @@ class Adafruit_Sensor {
   // These must be defined by the subclass
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  enable or disable auto-ranging for the sensor
     @param enabled pass true to enable auto-ranging, false to disable
 */
@@ -157,7 +157,7 @@ class Adafruit_Sensor {
   virtual void enableAutoRange(bool enabled) {};
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  enable auto-ranging for the sensor
     @return true on success, false on failure
 */
@@ -165,12 +165,12 @@ class Adafruit_Sensor {
   virtual bool getEvent(sensors_event_t*) = 0;
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  get information on the sensor
 */
 /**************************************************************************/
   virtual void getSensor(sensor_t*) = 0;
-  
+
  private:
   bool _autoRange; ///< state of auto-ranging for this sensor. True if enabled, false if disabled
 };

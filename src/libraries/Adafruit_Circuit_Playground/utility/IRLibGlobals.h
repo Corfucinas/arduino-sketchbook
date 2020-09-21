@@ -21,7 +21,7 @@
  * uint16_t that should be at least 100 entries as defined by this default below.
  * However some IR sequences will require longer buffers especially those used for
  * air conditioner controls. In general we recommend you keep this value below 255
- * so that the index into the array can remain 8 bits. This library can handle larger 
+ * so that the index into the array can remain 8 bits. This library can handle larger
  * arrays however it will make your code longer in addition to taking more RAM.
  */
 #define RECV_BUF_LENGTH 100
@@ -42,7 +42,7 @@
 typedef uint8_t  currentState_t;
 /* The structure contains information used by the ISR routines. Because we cannot
  * pass parameters to an ISR, it must be global. Values which can be changed by
- * the ISR but are accessed outside the ISR must be volatile. 
+ * the ISR but are accessed outside the ISR must be volatile.
  */
 typedef struct {
 //These next 4 fields are initialized by the receiver class and unlikely to change once
@@ -53,7 +53,7 @@ typedef struct {
 //Used by IRrecv only
   uint16_t frameTimeoutTicks;// = frameTimeout/USEC_PER_TICKS
   bool enableBlinkLED;
-  
+
 //These fields are both read and written inside and outside ISRs. Must be volatile.
   volatile bool decoderWantsData;	//tells ISR previous decode is finished. Buffer available.
   volatile bool newDataAvailable; //ISR flag informs getResults that data is available.
@@ -69,7 +69,7 @@ typedef struct {
 //The decoderBuffer pointer is maintained by the decoder. It points to where the
 //decoder wants the data put by the receiver. It will point to either recvGlobal.recvBuffer
 //or an external buffer provided by the user via useExtnBuf. The decodeLength
-//is set by the receiver telling the decoder the data length. 
+//is set by the receiver telling the decoder the data length.
   volatile uint16_t* decodeBuffer;
   volatile bufIndex_t decodeLength;
 //This field accumulates the elapsed time of a MARK or SPACE. IRrecv uses it only inside
@@ -78,7 +78,7 @@ typedef struct {
   volatile uint32_t timer;     // state timer, counts 50uS ticks.(and other uses)
 //Used by both IRrecv and IRrecvPCI.
   volatile currentState_t currentState;   // state machine  Legal values defined above.
-} 
+}
 recvGlobal_t;
 extern  recvGlobal_t recvGlobal; //declared in IRLibRecvBase.cpp
 
@@ -100,7 +100,7 @@ extern  recvGlobal_t recvGlobal; //declared in IRLibRecvBase.cpp
  * buffer and one length variable. If there was an external buffer, only the decoder
  * needed to access it. Now the receiver and ISR needs access to that external buffer
  * in order to implement auto resume. Therefore the extra buffer needs to be linked
- * to recvGlobal as well. The receiver puts the data in recvGlobal.recvBuffer and it's 
+ * to recvGlobal as well. The receiver puts the data in recvGlobal.recvBuffer and it's
  * length is in recvGlobal.recvLength. It is for the receiver's internal use.
  * Additionally we have "decodeBuffer" and "decodeLength" which
  * are defined as where the decoder wants the receiver to put its data. The decoder
@@ -125,6 +125,6 @@ extern  recvGlobal_t recvGlobal; //declared in IRLibRecvBase.cpp
  * slowdown the decoding process (I ran some tests). So as part of "good programming
  * practices we are marking the buffers and lengths as volatile just in case. We need not
  * use atomic blocks to access the buffer except in very rare cases.
- */ 
+ */
 #define DEBUG_VALUE(l, v) Serial.print(l); Serial.print(":"); Serial.println(v,DEC);
 #endif

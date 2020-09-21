@@ -193,7 +193,7 @@ static const uint8_t PROGMEM _NeoPixelGammaTable[256] = {
   218,220,223,225,227,230,232,235,237,240,242,245,247,250,252,255};
 #endif
 
-/*! 
+/*!
     @brief  Class that stores state and functions for interacting with
             Adafruit NeoPixels and compatible devices.
 */

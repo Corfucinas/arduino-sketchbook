@@ -17,7 +17,7 @@ volatile bool adc_buffer_filled = false;
 uint16_t peak_to_peak(uint16_t *data, int data_length){
   int signalMax = 0;
   int signalMin = 4096;  // max value for 12 bit adc
- 
+
   for(int i=0; i<data_length; i++){
     if ( data[i] > signalMax ) {
       signalMax = data[i];

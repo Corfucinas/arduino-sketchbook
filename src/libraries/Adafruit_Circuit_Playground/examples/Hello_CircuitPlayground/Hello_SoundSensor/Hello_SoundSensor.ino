@@ -10,7 +10,7 @@ void setup() {
 void loop() {
   // Take 10 milliseconds of sound data to calculate
   value = CircuitPlayground.mic.soundPressureLevel(10);
-  
+
   Serial.print("Sound Sensor SPL: ");
   Serial.println(value);
 

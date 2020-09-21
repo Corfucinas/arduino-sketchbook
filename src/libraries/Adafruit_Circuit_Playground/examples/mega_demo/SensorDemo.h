@@ -31,7 +31,7 @@ public:
     for (int i=0; i<10; ++i) {
       CircuitPlayground.strip.setPixelColor(i, 0);
     }
-    
+
     // Measure the light level and use it to light up its LEDs (right half).
     uint16_t light = CircuitPlayground.lightSensor();
     int level = (int)lerp(light, minLight[mode], maxLight[mode], 0.0, 5.0);

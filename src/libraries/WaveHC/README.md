@@ -5,7 +5,7 @@
 ## WaveHC is a library for the Adafruit Wave Shield.:
   * https://www.adafruit.com/products/94
 
-To use this library place the uncompressed WaveHC folder into the 
+To use this library place the uncompressed WaveHC folder into the
 libraries subfolder in your main sketches folder.  You may need to
 create the libraries folder.  Restart the Arduino IDE if it was open.
 
@@ -23,8 +23,8 @@ problems run the SdReadTest.pde sketch to get more information.
 
 ## ATMEGA168
 
-For the AtMega168 be sure to reduce the serial buffer size by setting 
-RX_BUFFER_SIZE to 32 or less in 
+For the AtMega168 be sure to reduce the serial buffer size by setting
+RX_BUFFER_SIZE to 32 or less in
 hardware/arduino/cores/arduino/HardwareSerial.cpp.  I use 16.
 
 
@@ -83,7 +83,7 @@ option for FAT type so it may format small cards as FAT12.
 
 ## EXAMPLES
 
-I have included several updates examples for WaveHC in the WaveHC/examples 
+I have included several updates examples for WaveHC in the WaveHC/examples
 folder.  More examples can be downloaded from the Adafruit website:
 http://www.ladyada.net/make/waveshield/examples.html
 
@@ -96,10 +96,10 @@ The updated examples are:
 `PiSpeaker.ino` - A text-to-voice sketch that reads pi.  You need to
                 put the files from the piwav folder in example files
                 on an SD.
-                
+
 `SampleRateHC.ino` - A modified version of the Adafruit example that
                    sets player sample rate by reading analog pin zero.
-                   
+
 `SoftVolume.ino` - A modified version of the Adafruit example
                  for software volume control.
 
@@ -108,7 +108,7 @@ The updated examples are:
                   applications that must not have a large latency
                   between files.
 
-                  
+
 ## CUSTOM SETTINGS
 
 Advanced users may wish to change WaveHC settings.  Most setting are

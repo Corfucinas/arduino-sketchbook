@@ -11,7 +11,7 @@
  * using the other two available receiver classes.
  *
  * This receiver is based in part on Arduino firmware for use with AnalysIR IR signal analysis
- * software for Windows PCs. Many thanks to the people at http://analysir.com for their 
+ * software for Windows PCs. Many thanks to the people at http://analysir.com for their
  * assistance in developing this section of code.
  */
 
@@ -22,10 +22,10 @@ void IRrecvPCI_Handler();//prototype for interrupt handler
 
 /* Note that the constructor is passed the interrupt number rather than the pin number.
  * WARNING: These interrupt numbers which are passed to “attachInterrupt()” are not
- * necessarily identical to the interrupt numbers in the datasheet of the processor chip 
+ * necessarily identical to the interrupt numbers in the datasheet of the processor chip
  * you are using. Rather it is a numbering system to the “attachInterrupt()” Arduino
  * function. For more information on attachInterrupt see
- * http://arduino.cc/en/Reference/AttachInterrupt 
+ * http://arduino.cc/en/Reference/AttachInterrupt
  */
 IRrecvPCI::IRrecvPCI(uint8_t pin) {
   init();
@@ -39,7 +39,7 @@ IRrecvPCI::IRrecvPCI(uint8_t pin) {
  */
 void IRrecvPCI::enableIRIn(void) {
 //See comments on IRrecv::enableIRIn in "IRLibRecv.cpp" for explanation of this logic
-  if(recvGlobal.newDataAvailable) 
+  if(recvGlobal.newDataAvailable)
     return;
   recvGlobal.decoderWantsData=true;//otherwise he wouldn't have called
   if( (recvGlobal.currentState==STATE_FINISHED) || IRLib_didIROut ) {
@@ -50,7 +50,7 @@ void IRrecvPCI::enableIRIn(void) {
 };
 
 /* Even when not sampling inputs and recording pulse timing, the ISR remains active
- * continues to interrupt every 50us however it remains in a do-nothing state. If 
+ * continues to interrupt every 50us however it remains in a do-nothing state. If
  * the user wants to truly shut down the ISR they can call this method.
  */
 void IRrecvPCI::disableIRIn(void) {
@@ -63,8 +63,8 @@ void IRrecvPCI::disableIRIn(void) {
  * is changing, it may not recognize the long gap at the end of the frame so we need to
  * test to see if we had a long gap. Because the ISR is active, we need to ensure
  * that it doesn't change any variables while we are in the middle of accessing them.
- * Unfortunately the ATOMIC_BLOCK macro that we used to use is not supported for 
- * SAMD 21 platforms so we have to use "noInterrupts();" and "interrupts();" 
+ * Unfortunately the ATOMIC_BLOCK macro that we used to use is not supported for
+ * SAMD 21 platforms so we have to use "noInterrupts();" and "interrupts();"
  * This is only necessary for multibyte variables.
  */
 bool IRrecvPCI::getResults(void) {
@@ -93,13 +93,13 @@ bool IRrecvPCI::getResults(void) {
 /* This is the interrupt handler used by this class. It is called every time the input
  * pin changes from high to low or from low to high. The initial state of the state machine
  * is STATE_READY_TO_BEGIN. It waits until it sees a MARK before it switches to
- * STATE_RUNNING. Each subsequent interrupt it computes the time since the previous 
+ * STATE_RUNNING. Each subsequent interrupt it computes the time since the previous
  * interrupt. If it notices a SPACE is especially long then it calls IRLib_IRrecvComplete
  * which sets the proper flags to say that we had received data and implements
  * auto resume if enabled. The state STATE_FINISHED means that interrupts are continuing
  * however the receiver isn't ready for more data.
  */
-void IRrecvPCI_Handler(){ 
+void IRrecvPCI_Handler(){
   uint32_t volatile changeTime=micros();
   uint32_t deltaTime=changeTime-recvGlobal.timer;
   switch(recvGlobal.currentState) {

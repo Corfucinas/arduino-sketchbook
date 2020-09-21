@@ -61,7 +61,7 @@ void loop() {
     startImag   = (int64_t)((centerImag + rangeImag * 0.5)   * (float)(1 << bits)),
     incReal     = (int64_t)((rangeReal / (float)pixelWidth)  * (float)(1 << bits)),
     incImag     = (int64_t)((rangeImag / (float)pixelHeight) * (float)(1 << bits));
-  
+
   startTime = millis();
   posImag = startImag;
   for (int y = 0; y < pixelHeight; y++) {
@@ -72,7 +72,7 @@ void loop() {
       for (n = iterations; n > 0 ; n--) {
         a2 = (a * a) >> bits;
         b2 = (b * b) >> bits;
-        if ((a2 + b2) >= (4 << bits)) 
+        if ((a2 + b2) >= (4 << bits))
           break;
         b  = posImag + ((a * b) >> (bits - 1));
         a  = posReal + a2 - b2;

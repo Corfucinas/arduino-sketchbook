@@ -28,22 +28,22 @@ public:
       int numPixels = CircuitPlayground.strip.numPixels();
       float peakToPeak = 0;   // peak-to-peak level
       unsigned int c, y;
-    
+
       //get peak sound pressure level over the sample window
       peakToPeak = CircuitPlayground.mic.soundPressureLevel(SAMPLE_WINDOW);
-    
+
       //limit to the floor value
       peakToPeak = max(INPUT_FLOOR, peakToPeak);
-     
+
       // Serial.println(peakToPeak);
-    
+
       //Fill the strip with rainbow gradient
       for (int i=0;i<=numPixels-1;i++){
         CircuitPlayground.strip.setPixelColor(i, CircuitPlayground.colorWheel(map(i,0,numPixels-1,30,150)));
       }
-    
+
       c = mapf(peakToPeak, INPUT_FLOOR, INPUT_CEILING, numPixels, 0);
-    
+
       // Turn off pixels that are below volume threshold.
       if(c < peak) {
         peak = c;        // Keep dot on top
@@ -52,21 +52,21 @@ public:
       if (c <= numPixels) { // Fill partial column with off pixels
         drawLine(numPixels, numPixels-c, CircuitPlayground.strip.Color(0, 0, 0));
       }
-    
+
       // Set the peak dot to match the rainbow gradient
       y = numPixels - peak;
       CircuitPlayground.strip.setPixelColor(y-1,CircuitPlayground.colorWheel(map(y,0,numPixels-1,30,150)));
       CircuitPlayground.strip.show();
-    
+
       // Frame based peak dot animation
       if(dotHangCount > PEAK_HANG) { //Peak pause length
-        if(++dotCount >= PEAK_FALL) { //Fall rate 
+        if(++dotCount >= PEAK_FALL) { //Fall rate
           peak++;
           dotCount = 0;
         }
-      } 
+      }
       else {
-        dotHangCount++; 
+        dotHangCount++;
       }
   }
 

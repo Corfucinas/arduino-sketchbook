@@ -24,10 +24,10 @@ void setup() {
 void loop() {
   Serial.println("Going to sleep in one second...");
   delay(1000);
-  
+
   // To enter low power sleep mode call Watchdog.sleep() like below
   // and the watchdog will allow low power sleep for as long as possible.
-  // The actual amount of time spent in sleep will be returned (in 
+  // The actual amount of time spent in sleep will be returned (in
   // milliseconds).
   digitalWrite(LED_BUILTIN, LOW); // Show we're asleep
   int sleepMS = Watchdog.sleep();

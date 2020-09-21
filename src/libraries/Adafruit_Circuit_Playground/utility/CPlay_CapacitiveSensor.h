@@ -27,7 +27,7 @@
 
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Class that stores state and functions for the capacitive sensor on CircuitPlayground boards
 */
 /**************************************************************************/
@@ -55,7 +55,7 @@ class CPlay_CapacitiveSensor
 	uint8_t _sendPin, _receivePin;
 	volatile RwReg *send_outport, *recv_outport, *recv_inport, *recv_direction;
 	RwReg send_mask, recv_mask;
-  
+
   // methods
 	int SenseOneCycle(void);
 };

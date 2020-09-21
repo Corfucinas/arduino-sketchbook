@@ -14,7 +14,7 @@ void setup() {
   Serial.begin(9600);
 
   while (!Serial); // Wait until serial console is opened
-  
+
   CircuitPlayground.irReceiver.enableIRIn(); // Start the receiver
   Serial.println("Ready to receive IR signals");
 }

@@ -31,7 +31,7 @@ void setup() {
   }
   // enable optimize read - some cards may timeout
   card.partialBlockRead(true);
-  
+
   if (!vol.init(card)) {
     error("No partition!");
   }
@@ -46,28 +46,28 @@ void setup() {
 void playcomplete(FatReader &file);
 
 //////////////////////////////////// LOOP
-void loop() { 
+void loop() {
   uint8_t i, r;
   char c, name[15];
   dir_t dir;
 
   root.rewind();
   // scroll through the files in the directory
-  while (root.readDir(dir) > 0) { 
+  while (root.readDir(dir) > 0) {
     // only play .WAV files
     if (strncmp_P((char *)&dir.name[8],PSTR("WAV"), 3)) continue;
-    
+
     if (!file.open(vol, dir)){
       putstring("Can't open ");
       printEntryName(dir);
       Serial.println();
       continue;
     }
-    putstring("\n\rPlaying "); 
+    putstring("\n\rPlaying ");
     printEntryName(dir);
     Serial.println();
     playcomplete(file);
-    file.close();    
+    file.close();
   }
 }
 
@@ -103,10 +103,10 @@ void playcomplete(FatReader &file) {
   wave.play();
   while (wave.isplaying) {
     putstring("Vol: ");
-    
+
     // DVOLUME must be nonzero in WaveHC.h to use volume.
     Serial.println(wave.volume, DEC);
-     
+
     delay(2000);
     wave.volume++;
     if ( wave.volume == 12) {

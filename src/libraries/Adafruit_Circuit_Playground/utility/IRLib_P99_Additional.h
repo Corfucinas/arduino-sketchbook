@@ -36,10 +36,10 @@ class IRdecodeAdditional: public virtual IRdecodeBase {
     bool IRdecodeAdditional::decode(void) {
       IRLIB_ATTEMPT_MESSAGE(F("Additional"));
       /*********
-       *  Insert your code here. Return false if it fails. 
-       *  Don't forget to include the following lines or 
+       *  Insert your code here. Return false if it fails.
+       *  Don't forget to include the following lines or
        *  equivalent somewhere in the code.
-       *  
+       *
        *  bits = 32;	//Substitute proper value here
        *  value = data;	//return data in "value"
        *  protocolNum = ADDITIONAL;	//set the protocol number here.

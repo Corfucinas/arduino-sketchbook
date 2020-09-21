@@ -14,7 +14,7 @@ Adafruit 2.4" TFT LCD with Touchscreen Breakout w/MicroSD Socket - ILI9341
 2.2" 18-bit color TFT LCD display with microSD card breakout - ILI9340
   * https://www.adafruit.com/product/1480
 
-TFT FeatherWing - 2.4" 320x240 Touchscreen For All Feathers 
+TFT FeatherWing - 2.4" 320x240 Touchscreen For All Feathers
   * https://www.adafruit.com/product/3315
 
 Check out the links above for our tutorials and wiring diagrams.

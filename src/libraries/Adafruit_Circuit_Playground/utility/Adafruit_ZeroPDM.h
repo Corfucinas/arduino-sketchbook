@@ -42,7 +42,7 @@ public:
   // Create a new instance of an I2S audio transmitter.
   // Can specify the pins to use and the generic clock ID to use for driving the I2S
   // hardware (default is GCLK 3).
-  Adafruit_ZeroPDM(int clockpin, int datapin, uint8_t gclk = 3); 
+  Adafruit_ZeroPDM(int clockpin, int datapin, uint8_t gclk = 3);
 
   // Initialize the I2S audio  receiver.
   bool begin();

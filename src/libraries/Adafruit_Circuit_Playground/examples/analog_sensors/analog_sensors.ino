@@ -28,7 +28,7 @@
 
 // These defines set the range of pixel color when mapping
 // to the sensor value.
-#define COLOR_RED_MIN    255  
+#define COLOR_RED_MIN    255
 #define COLOR_GREEN_MIN  0
 #define COLOR_BLUE_MIN   0
 

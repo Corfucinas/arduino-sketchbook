@@ -9,7 +9,7 @@ void setup() {
 
 void loop() {
   slideSwitch = CircuitPlayground.slideSwitch();
-  
+
   Serial.print("Slide Switch: ");
   if (slideSwitch) {
     Serial.print("+");
@@ -17,6 +17,6 @@ void loop() {
     Serial.print("-");
   }
   Serial.println();
-  
+
   delay(1000);
 }

@@ -39,7 +39,7 @@ uint8_t cidDmp(void) {
 // print partition table
 uint8_t partDmp(void) {
   part_t pt;
-  putstring_nl("partion,boot,type,start,length");  
+  putstring_nl("partion,boot,type,start,length");
   for (uint8_t ip = 1; ip < 5; ip++) {
       if (!card.readData(0, PART_OFFSET + 16*(ip-1), (uint8_t *)&pt, 16)) {
         putstring("read partition table failed");
@@ -54,7 +54,7 @@ uint8_t partDmp(void) {
       Serial.write(',');
       Serial.print(pt.firstSector);
       Serial.write(',');
-      Serial.println(pt.totalSectors); 
+      Serial.println(pt.totalSectors);
   }
   return true;
 }
@@ -64,7 +64,7 @@ void sdError(void) {
   putstring("errorCode: ");
   Serial.println(card.errorCode(), HEX);
   putstring("errorData: ");
-  Serial.println(card.errorData(), HEX);  
+  Serial.println(card.errorData(), HEX);
   return;
 }
 void setup(void) {
@@ -99,7 +99,7 @@ void loop(void) {
     default:
       putstring_nl("Unknown");
   }
-  
+
   if(!cidDmp()) return;
   uint32_t size = card.cardSize();
   if (size == 0) {
@@ -140,7 +140,7 @@ void loop(void) {
   else {
     putstring_nl("\nRead Failure");
     putstring("lbn: ");
-    Serial.println(b);  
+    Serial.println(b);
     sdError();
   }
 }

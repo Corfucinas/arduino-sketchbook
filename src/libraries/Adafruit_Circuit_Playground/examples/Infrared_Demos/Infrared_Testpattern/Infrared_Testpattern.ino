@@ -2,7 +2,7 @@
  *  Send an easily recognized pattern of bits from one Arduino
  *  to another to verify that your protocol is working. Load
  *  this sketch to send a signal. Use the "dump" sketch on the other
- *  Arduino to receive codes. Open the serial monitor and type the  
+ *  Arduino to receive codes. Open the serial monitor and type the
  *  number Of the protocol want to test.
  */
 #include <Adafruit_CircuitPlayground.h>
@@ -12,10 +12,10 @@
 #endif
 
 void setup() {
-  CircuitPlayground.begin(); 
+  CircuitPlayground.begin();
   Serial.begin(9600);
   while (!Serial); // Wait for serial console
-  
+
   Serial.println("Type the protocol number: 1-12 Or '-1' for all");
 }
 
@@ -42,7 +42,7 @@ void sendOne(uint8_t protocol, uint32_t data, uint16_t data2 = 0, uint8_t khz = 
 #define ALL1S    0xFFFFFFFF
 
 void doTest (uint8_t P) {
-  switch (P) {  
+  switch (P) {
     case 1: sendOne(1,PATTERN1);      //NEC Regular data
             sendOne(1,REPEAT_CODE);   //NEC Special ditto repeat code
             sendOne(1,PATTERN1,40);   //Pioneer is NEC with 40 kHz modulation
@@ -51,7 +51,7 @@ void doTest (uint8_t P) {
             sendOne(2,PATTERN1,15);   //Sony 15 bits
             sendOne(2,PATTERN1,20);   //Sony 20 bits
             break;      //Note: Sony always sends three copies of signal
-    case 3: sendOne(3,ALL1S,13);      //RC5 
+    case 3: sendOne(3,ALL1S,13);      //RC5
             sendOne(3,ALL1S,14);      //RC5-F7
             sendOne(3,ALL1S,14,57);   //RC5-F7-57
             break;
@@ -64,13 +64,13 @@ void doTest (uint8_t P) {
             break;
     case 6: //JVC use "true" for first frame, "false" for repeats
             //When "true" it automatically sends one repeat. Use "false"
-            //for additional repeats. The 2 lines below will actually send 
+            //for additional repeats. The 2 lines below will actually send
             //a total of 3 frames... A first and 2 repeats.
-            sendOne(6,PATTERN1,true); 
-            sendOne(6,PATTERN1,false); 
-            break;      
+            sendOne(6,PATTERN1,true);
+            sendOne(6,PATTERN1,false);
+            break;
     case 7: sendOne(7,PATTERN1);      //NECx used by many Samsung TVs
-            sendOne(7,REPEAT_CODE);   //Some varieties use ditto 
+            sendOne(7,REPEAT_CODE);   //Some varieties use ditto
             break;
     case 8: sendOne(8,0x12345,0x1234);//Samsung36 16 bit address +20 data
             break;
@@ -89,9 +89,9 @@ void doTest (uint8_t P) {
               sendOne(12,CYKM_MOUSE_MOVE+CYKM_DIR_UP);   //Move mouse up
               sendOne(12,CYKM_MOUSE_MOVE+CYKM_DIR_LEFT); //Move mouse left
               sendOne(12,CYKM_MOUSE_MOVE+CYKM_DIR_DOWN); //Move mouse down
-              break;    
+              break;
   };
-  
+
 }
 void loop() {
   if (Serial.available () > 0) {

@@ -18,7 +18,7 @@ uint16_t sincfilter[DECIMATION] = {0, 2, 9, 21, 39, 63, 94, 132, 179, 236, 302, 
 
 void setup() {
   pinMode(13, OUTPUT);
-  
+
   // Configure serial port.
   while (!SERIALPORT);
   SERIALPORT.begin(115200);
@@ -51,9 +51,9 @@ void loop() {
   for (uint8_t samplenum=0; samplenum < (DECIMATION/16) ; samplenum++) {
      uint16_t sample = pdm.read() & 0xFFFF;    // we read 16 bits at a time, by default the low half
 
-     ADAPDM_REPEAT_LOOP_16(      // manually unroll loop: for (int8_t b=0; b<16; b++) 
+     ADAPDM_REPEAT_LOOP_16(      // manually unroll loop: for (int8_t b=0; b<16; b++)
        {
-         // start at the LSB which is the 'first' bit to come down the line, chronologically 
+         // start at the LSB which is the 'first' bit to come down the line, chronologically
          // (Note we had to set I2S_SERCTRL_BITREV to get this to work, but saves us time!)
          if (sample & 0x1) {
            runningsum += *sinc_ptr;     // do the convolution

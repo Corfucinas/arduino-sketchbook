@@ -7,7 +7,7 @@
  * interrupts is used to modulate the frequency of the PWM output signal. We need a flag
  * for the send object to inform you receive object that this occurred.
  *
- * Some applications do sending only and would only require you to include IRLibSendBase.h 
+ * Some applications do sending only and would only require you to include IRLibSendBase.h
  * while others only do receiving/decoding and would include IRLibRecvBase.h but not
  * IRLibSendBase.h. The only include file that is used by both sending and receiving is
  * the IRLibHardware.h which was formerly called IRLibTimer.h. Therefore we put the flag
@@ -16,7 +16,7 @@
  * whether or not there is a sender.
  *
  * The below is a global flag IRLib_didIROut that gets set true with every call to enableIROut.
- * Then any call to IRrecv::enableIRIn checks this to see if it needs to restart the ISR. 
+ * Then any call to IRrecv::enableIRIn checks this to see if it needs to restart the ISR.
  * Regardless IRrecv::enableIRIn will always reset it it false for the next time.
  * Note as always if you try to send while in the middle of receiving, the partially received
  * data is lost. If the application wishes to create a system where the sending waits until

@@ -63,7 +63,7 @@ void Get_Temp(){  // Get the temperature from a DS1621
   TinyWireM.endTransmission();          // Send 1 byte to the slave
   TinyWireM.requestFrom(DS1621_ADDR,1); // Request 1 byte from slave
   tempC = TinyWireM.receive();          // get the temperature
-  tempF = tempC * 9 / 5 + 32;           // convert to Fahrenheit 
+  tempF = tempC * 9 / 5 + 32;           // convert to Fahrenheit
 }
 
 

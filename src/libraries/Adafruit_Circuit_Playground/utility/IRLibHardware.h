@@ -51,7 +51,7 @@
 #elif defined(__AVR_AT90USB162__)
 	#define IR_SEND_TIMER1	17
 
-/* Teensy 2.0 versus Leonardo These boards use the same chip but the 
+/* Teensy 2.0 versus Leonardo These boards use the same chip but the
  * pinouts are different.*/
 #elif defined(__AVR_ATmega32U4__)
 	#ifdef CORE_TEENSY
@@ -76,7 +76,7 @@
 #elif defined(__AVR_ATmega644P__) || defined(__AVR_ATmega644__)
 	//#define IR_SEND_TIMER1	13
 	#define IR_SEND_TIMER2		14
-  
+
 /* Arduino Zero, M0, M0 Pro, Feather M0 etc. */
 #elif defined (__SAMD21G18A__)
 // All of the settings can be found in IRLibSAMD21.h
@@ -96,7 +96,7 @@
  * available digital output pin. It need not be a designated PWM pin.
  * NOTE: By un-commenting this line, you are forcing the library to ignore
  * hardware detection and timer specifications above. The bit-bang frequency
- * code is not as accurate as using a hardware timer but it is more flexible and 
+ * code is not as accurate as using a hardware timer but it is more flexible and
  * less hardware platform dependent.
  */
 //#define IR_SEND_BIT_BANG  3  //Be sure to set this pin number if you un-comment
@@ -107,14 +107,14 @@
 
 /* We are going to presume that you want to use the same hardware timer to control
  * the 50 microsecond interrupt used by the IRrecv receiver class as was specified
- * above in the hardware detection section for sending. Even if you specified bit-bang 
- * for sending, the definitions above have selected a default sending timer for you based 
+ * above in the hardware detection section for sending. Even if you specified bit-bang
+ * for sending, the definitions above have selected a default sending timer for you based
  * on hardware detection. If that is correct, then do nothing below.  However if you do
- * wish to specify an IR_RECV_TIMER different than the IR_SEND_TIMER selected by the code 
- * above, then you should un-comment the IR_RECV_TIMER_OVERRIDE and also un-comment one 
+ * wish to specify an IR_RECV_TIMER different than the IR_SEND_TIMER selected by the code
+ * above, then you should un-comment the IR_RECV_TIMER_OVERRIDE and also un-comment one
  * and only one of the following IR_RECV_TIMERx lines below that.
- * NOTE: You are responsible for ensuring that the timer you are specifying is 
- * available on your hardware. You should only choose timers which are shown as available 
+ * NOTE: You are responsible for ensuring that the timer you are specifying is
+ * available on your hardware. You should only choose timers which are shown as available
  * for your hardware platform as shown in the defines in the IR_SEND_TIMER section above.
  * NOTE: This discussion does not apply to SAMD 21 processors.
  */
@@ -164,7 +164,7 @@
 		for(unsigned int j=0;j<jmax;j++) {\
 		  digitalWrite(IR_SEND_BIT_BANG, HIGH);  delayMicroseconds(onTime);\
 		  digitalWrite(IR_SEND_BIT_BANG, LOW);   delayMicroseconds(offTime);}
-	#define IR_SEND_MARK_TIME(time) 
+	#define IR_SEND_MARK_TIME(time)
 	#define IR_SEND_PWM_STOP
 	#define IR_SEND_CONFIG_KHZ(val)  float Length=1000.0/(float)khz;\
 		iLength=int(Length+0.5); onTime=int(Length/3.0); \
@@ -257,18 +257,18 @@
 	#endif
 #elif defined(IRLibSAMD21_h) // Used for SAMD 21
 /* All of these definitions have been moved to IRLibSAMD21.h
-	#define IR_SEND_PWM_START 
+	#define IR_SEND_PWM_START
 	#define IR_SEND_MARK_TIME(time)
-	#define IR_SEND_PWM_STOP 
-  #define IR_SEND_PWM_PIN	
-	#define IR_SEND_CONFIG_KHZ(val) 
+	#define IR_SEND_PWM_STOP
+  #define IR_SEND_PWM_PIN
+	#define IR_SEND_CONFIG_KHZ(val)
  */
 #else // unknown timer
 	#error "Internal code configuration error, no known IR_SEND_TIMER# defined\n"
 #endif
 
 /* This section sets up the 50 microsecond interval timer used by the
- * IRrecv receiver class. The various timers have already been selected 
+ * IRrecv receiver class. The various timers have already been selected
  * earlier in this file.  Theoretically you could change the 50 but it has not been tested.
  */
 #define USEC_PER_TICK 50  // microseconds per clock interrupt tick
@@ -332,7 +332,7 @@
 		OCR5A = SYSCLOCK * USEC_PER_TICK / 1000000;   TCNT5 = 0; })
 #elif defined(IRLibSAMD21_h)  //for SAMD 21
 /* All of these definitions have been moved to IRLibSAMD21.h
-	#define IR_RECV_ENABLE_INTR 
+	#define IR_RECV_ENABLE_INTR
   #define IR_RECV_DISABLE_INTR
 	#define IR_RECV_INTR_NAME
 	#define IR_RECV_CONFIG_TICKS()
@@ -344,7 +344,7 @@
 //Cannot use blinking LED on 13 if that's the output pin.
 #if (IR_SEND_PWM_PIN==13)
   #define BLINKLED      -1
-  #define BLINKLED_ON() 
+  #define BLINKLED_ON()
   #define BLINKLED_OFF()
 #endif
 // defines for blinking the LED
@@ -368,7 +368,7 @@
   #else
     #define BLINKLED       13
     #define BLINKLED_ON()  (digitalWrite(13, HIGH))
-    #define BLINKLED_OFF() (digitalWrite(13, LOW))  
+    #define BLINKLED_OFF() (digitalWrite(13, LOW))
   #endif
 #endif
 

@@ -19,7 +19,7 @@ void setup() {
 void loop() {
   // for the on board NeoPixels, use the CircuitPlayground functions
   CircuitPlayground.clearPixels();
-  
+
   // for the external NeoPixels, must use the Adafruit_CPlay_NeoPixel functions directly
   strip.clear();
   strip.show();
@@ -31,7 +31,7 @@ void loop() {
   CircuitPlayground.setPixelColor(2,   0, 255,   0);
   CircuitPlayground.setPixelColor(3,   0, 128, 128);
   CircuitPlayground.setPixelColor(4,   0,   0, 255);
-  
+
   CircuitPlayground.setPixelColor(5, 0xFF0000);
   CircuitPlayground.setPixelColor(6, 0x808000);
   CircuitPlayground.setPixelColor(7, 0x00FF00);
@@ -44,7 +44,7 @@ void loop() {
   strip.setPixelColor(2,   0, 255,   0);
   strip.setPixelColor(3,   0, 128, 128);
   strip.setPixelColor(4,   0,   0, 255);
-  
+
   // but for the external strip, must call show()
   strip.show();
 

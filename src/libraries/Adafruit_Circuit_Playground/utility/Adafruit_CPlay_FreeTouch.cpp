@@ -81,7 +81,7 @@ void Adafruit_CPlay_FreeTouch::setupClock(void) {
   // original line: gclk_chan_conf.source_generator = GCLK_GENERATOR_1;
   /* Select the desired generic clock generator */
   new_clkctrl_config |= source_generator << GCLK_CLKCTRL_GEN_Pos;  // from gclk.c
-  
+
   /* Disable generic clock channel */
   // original line: system_gclk_chan_disable(channel);
   noInterrupts();
@@ -105,7 +105,7 @@ void Adafruit_CPlay_FreeTouch::setupClock(void) {
   /* Restore previous configured clock generator */
   GCLK->CLKCTRL.bit.GEN = prev_gen_id;
 
-  //system_interrupt_leave_critical_section();  
+  //system_interrupt_leave_critical_section();
   interrupts();
 
   /* Write the new configuration */
@@ -115,7 +115,7 @@ void Adafruit_CPlay_FreeTouch::setupClock(void) {
   *((uint8_t*)&GCLK->CLKCTRL.reg) = channel;
   GCLK->CLKCTRL.reg |= GCLK_CLKCTRL_CLKEN;	/* Enable the generic clock */
 
-    
+
   // original line: system_apb_clock_set_mask(SYSTEM_CLOCK_APB_APBC, PM_APBCMASK_PTC);
   PM->APBCMASK.reg |= PM_APBCMASK_PTC;
 }
@@ -142,7 +142,7 @@ uint16_t Adafruit_CPlay_FreeTouch::measure(void) {
 }
 
 uint16_t Adafruit_CPlay_FreeTouch::measureRaw(void) {
-  if (yline == -1) 
+  if (yline == -1)
     return -1;
 
   runInStandby(true);
@@ -174,11 +174,11 @@ uint16_t Adafruit_CPlay_FreeTouch::measureRaw(void) {
   sync_config();
 
   uint16_t ptcResult = startPtcAcquire();
-    
+
   QTOUCH_PTC->BURSTMODE.reg = burstmodeRegBackup;
-    
+
   sync_config();
-    
+
   return ptcResult;
 }
 
@@ -213,7 +213,7 @@ void Adafruit_CPlay_FreeTouch::selectYLine(void) {
   } else {
     QTOUCH_PTC->YSELECTH.reg = 0;
   }
-  
+
   sync_config();
 }
 
@@ -286,7 +286,7 @@ void Adafruit_CPlay_FreeTouch::setFreqHopping(freq_mode_t fh, freq_hop_t hs) {
 void Adafruit_CPlay_FreeTouch::ptcInitSettings(void) {
   ptcConfigIOpin();
 
-  enablePTC(false);  
+  enablePTC(false);
 
   QTOUCH_PTC->UNK4C04.reg &= 0xF7; //MEMORY[0x42004C04] &= 0xF7u;
   QTOUCH_PTC->UNK4C04.reg &= 0xFB; //MEMORY[0x42004C04] &= 0xFBu;
@@ -307,7 +307,7 @@ void Adafruit_CPlay_FreeTouch::ptcInitSettings(void) {
 void Adafruit_CPlay_FreeTouch::ptcConfigIOpin(void) {
   uint32_t ulpin = g_APinDescription[pin].ulPin;
   uint32_t ulport = g_APinDescription[pin].ulPort;
-  
+
   PORT->Group[ulport].PINCFG[ulpin].reg = 0x3;  // pmuxen + input
 
   uint8_t curr_pmux = (PORT->Group[ulport].PMUX[ulpin/2].reg);
@@ -353,7 +353,7 @@ void Adafruit_CPlay_FreeTouch::enableWCOint(boolean en) {
     QTOUCH_PTC->INTENABLE.bit.WCO = 1;
   } else {
     QTOUCH_PTC->INTDISABLE.bit.WCO = 1;
-  } 
+  }
   sync_config();
 }
 
@@ -363,7 +363,7 @@ void Adafruit_CPlay_FreeTouch::enableEOCint(boolean en) {
     QTOUCH_PTC->INTENABLE.bit.EOC = 1;
   } else {
     QTOUCH_PTC->INTDISABLE.bit.EOC = 1;
-  } 
+  }
   sync_config();
 }
 
@@ -404,12 +404,12 @@ void Adafruit_CPlay_FreeTouch::snapshotRegsAndPrint(uint32_t base, uint8_t numre
   }
   digitalWrite(LED_BUILTIN, LOW);
   printPTCregs(base, datas, numregs);
-  
+
   for (uint8_t i=0; i<numregs; i++) {
   //  Serial.print("$"); Serial.print(addr+i, HEX); Serial.print("\t0x");
   //  printHex(datas[i]); Serial.println();
   }
-  
+
 }
 
 // Print a hex with leading zero
@@ -424,77 +424,77 @@ void Adafruit_CPlay_FreeTouch::printPTCregs(uint32_t base, uint8_t *regs, uint8_
   for (uint8_t i=0; i<num; i++) {
       switch (i + base) {
         case 0x41004430:  Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" PMUX0:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" PMUX0:\t\t0x"); printHex(regs[i], true); break;
         case 0x41004431:  Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" PMUX1:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" PMUX1:\t\t0x"); printHex(regs[i], true); break;
         case 0x41004432:  Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" PMUX2:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" PMUX2:\t\t0x"); printHex(regs[i], true); break;
         case 0x41004433:  Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" PMUX3:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" PMUX3:\t\t0x"); printHex(regs[i], true); break;
 
         case 0x41004440:  Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" PCFG0:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" PCFG0:\t\t0x"); printHex(regs[i], true); break;
         case 0x41004441:  Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" PCFG1:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" PCFG1:\t\t0x"); printHex(regs[i], true); break;
         case 0x41004442:  Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" PCFG2:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" PCFG2:\t\t0x"); printHex(regs[i], true); break;
         case 0x41004443:  Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" PCFG3:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" PCFG3:\t\t0x"); printHex(regs[i], true); break;
         case 0x41004444:  Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" PCFG4:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" PCFG4:\t\t0x"); printHex(regs[i], true); break;
 
 
         case 0x42004C00: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Control A:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Control A:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C01: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Sync:     \t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Sync:     \t\t0x"); printHex(regs[i], true); break;
         case 0x42004C04: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Prescaler:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Prescaler:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C05: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Init:     \t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Init:     \t\t0x"); printHex(regs[i], true); break;
         case 0x42004C08: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Disable Irq:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Disable Irq:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C09: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Enable Irq:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Enable Irq:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C0A: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Flags:     \t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Flags:     \t\t0x"); printHex(regs[i], true); break;
         case 0x42004C0C: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Freq Cntl:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Freq Cntl:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C0D: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Conv Cntl:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Conv Cntl:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C10: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Y Select1:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Y Select1:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C11: Serial.print("0x"); Serial.print(i+0x42004C00, HEX);
-          Serial.print(" Y Select2:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Y Select2:\t\t0x"); printHex(regs[i], true); break;
 /*
         case 0x42004C12: Serial.print("0x"); Serial.print(i+0x42004C00, HEX);
-          Serial.print(" X Select1:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" X Select1:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C13: Serial.print("0x"); Serial.print(i+0x42004C00, HEX);
-          Serial.print(" X Select2:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" X Select2:\t\t0x"); printHex(regs[i], true); break;
 */
         case 0x42004C14: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Y Enable1:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Y Enable1:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C15: Serial.print("0x"); Serial.print(i+0x42004C00, HEX);
-          Serial.print(" Y Enable2:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Y Enable2:\t\t0x"); printHex(regs[i], true); break;
 /*
         case 0x42004C16: Serial.print("0x"); Serial.print(i+0x42004C00, HEX);
-          Serial.print(" X Enable1:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" X Enable1:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C17: Serial.print("0x"); Serial.print(i+0x42004C00, HEX);
-          Serial.print(" X Enable2:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" X Enable2:\t\t0x"); printHex(regs[i], true); break;
 */
         case 0x42004C18: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Compcap L:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Compcap L:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C19: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Compcap H:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Compcap H:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C1A: Serial.print("0x"); Serial.print(i+base, HEX);
           Serial.print(" Intcap:   \t\t0x"); printHex(regs[i], true); break;
         case 0x42004C1B: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Sense res:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Sense res:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C1C: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Result L:\t\t0x"); printHex(regs[i], true); break; 
+          Serial.print(" Result L:\t\t0x"); printHex(regs[i], true); break;
         case 0x42004C1D: Serial.print("0x"); Serial.print(i+base, HEX);
-          Serial.print(" Result H:\t\t0x"); printHex(regs[i], true); break; 
-        
+          Serial.print(" Result H:\t\t0x"); printHex(regs[i], true); break;
+
        }
   }
 }

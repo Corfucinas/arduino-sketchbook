@@ -3,16 +3,16 @@ LED VU meter for Circuit Playground
 This is a port of the Adafruit Amplitie project to Circuit Playground.
 Based on code for the adjustable sensitivity version of amplitie from:
   https://learn.adafruit.com/led-ampli-tie/the-code
- 
+
  Hardware requirements:
  - Circuit Playground
- 
+
  Software requirements:
  - Adafruit Circuit Playground library
- 
+
  Written by Adafruit Industries.  Distributed under the BSD license.
  This paragraph must be included in any redistribution.
- 
+
  */
 #include <Adafruit_CircuitPlayground.h>
 #include <Wire.h>
@@ -32,12 +32,12 @@ byte dotHangCount = 0; //Frame counter for holding peak dot
 
 float mapf(float x, float in_min, float in_max, float out_min, float out_max);
 
-void setup() 
+void setup()
 {
   CircuitPlayground.begin();
 }
 
-void loop() 
+void loop()
 {
   int numPixels = CircuitPlayground.strip.numPixels();
   float peakToPeak = 0;   // peak-to-peak level
@@ -48,7 +48,7 @@ void loop()
 
   //limit to the floor value
   peakToPeak = max(INPUT_FLOOR, peakToPeak);
- 
+
   // Serial.println(peakToPeak);
 
   //Fill the strip with rainbow gradient
@@ -74,13 +74,13 @@ void loop()
 
   // Frame based peak dot animation
   if(dotHangCount > PEAK_HANG) { //Peak pause length
-    if(++dotCount >= PEAK_FALL) { //Fall rate 
+    if(++dotCount >= PEAK_FALL) { //Fall rate
       peak++;
       dotCount = 0;
     }
-  } 
+  }
   else {
-    dotHangCount++; 
+    dotHangCount++;
   }
 }
 
@@ -107,11 +107,11 @@ float mapf(float x, float in_min, float in_max, float out_min, float out_max)
 uint32_t Wheel(byte WheelPos) {
   if(WheelPos < 85) {
     return CircuitPlayground.strip.Color(WheelPos * 3, 255 - WheelPos * 3, 0);
-  } 
+  }
   else if(WheelPos < 170) {
     WheelPos -= 85;
     return CircuitPlayground.strip.Color(255 - WheelPos * 3, 0, WheelPos * 3);
-  } 
+  }
   else {
     WheelPos -= 170;
     return CircuitPlayground.strip.Color(0, WheelPos * 3, 255 - WheelPos * 3);

@@ -22,10 +22,10 @@ WaveHC wave;      // This is the only wave (audio) object, since we will only pl
 
 void setup() {
   // set up Serial library at 9600 bps
-  Serial.begin(9600);           
-  
+  Serial.begin(9600);
+
   PgmPrintln("Pi speaker");
-  
+
   if (!card.init()) {
     error("Card init. failed!");
   }
@@ -44,19 +44,19 @@ void setup() {
 
 unsigned digit = 0;
 
-void loop() { 
+void loop() {
   // get next character from flash memory
   char c = pgm_read_byte(&pi[digit++]);
-   
+
   if (c == 0) {
     digit = 0;
     Serial.println();
     return;
   }
   Serial.write(c);
-    
+
   speaknum(c);
-   
+
   delay(10);
 }
 
@@ -65,15 +65,15 @@ void loop() {
 char filename[13];
 void speaknum(char c) {
   uint8_t i=0;
-  
+
   // copy flash string for 'period' to filename
   strcpy_P(filename, PSTR("P.WAV"));
-  
+
   if ('0' <= c && c <= '9') {
     // digit - change 'P' to digit
     filename[0] = c;
     i = 1;
-  } 
+  }
   else if (c != '.') {
     // error if not period
     return;
@@ -106,7 +106,7 @@ void sdErrorCheck(void) {
 void playcomplete(char *name) {
   playfile(name);
   while (wave.isplaying);
-  
+
   // see if an error occurred while playing
   sdErrorCheck();
 }
@@ -119,7 +119,7 @@ void playfile(char *name) {
   }
   if (!file.open(root, name)) {
     PgmPrint("Couldn't open file ");
-    Serial.print(name); 
+    Serial.print(name);
     return;
   }
   if (!wave.create(file)) {

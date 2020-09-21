@@ -14,7 +14,7 @@
 Adafruit_ZeroPDM Adafruit_CPlay_Mic::pdm = Adafruit_ZeroPDM(34, 35);
 
 // a windowed sinc filter for 44 khz, 64 samples
-uint16_t sincfilter[DECIMATION] = {0, 2, 9, 21, 39, 63, 94, 132, 179, 236, 302, 379, 467, 565, 674, 792, 920, 1055, 1196, 1341, 1487, 1633, 1776, 1913, 2042, 2159, 2263, 2352, 2422, 
+uint16_t sincfilter[DECIMATION] = {0, 2, 9, 21, 39, 63, 94, 132, 179, 236, 302, 379, 467, 565, 674, 792, 920, 1055, 1196, 1341, 1487, 1633, 1776, 1913, 2042, 2159, 2263, 2352, 2422,
                                   2474, 2506, 2516, 2506, 2474, 2422, 2352, 2263, 2159, 2042, 1913, 1776, 1633, 1487, 1341, 1196, 1055, 920, 792, 674, 565, 467, 379, 302, 236, 179, 132, 94, 63, 39, 21, 9, 2, 0, 0};
 
 // a manual loop-unroller!
@@ -51,7 +51,7 @@ static bool pdmConfigured = false;
 #define NOISE_THRESHOLD 3
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Reads ADC for given interval (in milliseconds, 1-65535). Uses ADC free-run mode w/polling on AVR.
      Any currently-installed ADC interrupt handler will be temporarily
      disabled while this runs.
@@ -70,7 +70,7 @@ int Adafruit_CPlay_Mic::peak(uint16_t ms) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  capture the passed number of samples and place them in buf.
     @param buf the buffer to store the samples in
     @param nSamples the number of samples to take
@@ -93,7 +93,7 @@ void Adafruit_CPlay_Mic::capture(int16_t *buf, uint16_t nSamples) {
   adcsra_save = ADCSRA;
   adcsrb_save = ADCSRB;
 
-  // Init ADC free-run mode; f = ( 8MHz/prescaler ) / 13 cycles/conversion 
+  // Init ADC free-run mode; f = ( 8MHz/prescaler ) / 13 cycles/conversion
   ADCSRA = 0;                          // Stop ADC interrupt, if any
   ADMUX  = _BV(REFS0) | channel;       // Aref=AVcc, channel sel, right-adj
   ADCSRB = 0;                          // Free run mode, no high MUX bit
@@ -146,9 +146,9 @@ void Adafruit_CPlay_Mic::capture(int16_t *buf, uint16_t nSamples) {
     for (uint8_t samplenum=0; samplenum < (DECIMATION/16) ; samplenum++) {
        uint16_t sample = pdm.read() & 0xFFFF;    // we read 16 bits at a time, by default the low half
 
-       ADAPDM_REPEAT_LOOP_16(      // manually unroll loop: for (int8_t b=0; b<16; b++) 
+       ADAPDM_REPEAT_LOOP_16(      // manually unroll loop: for (int8_t b=0; b<16; b++)
          {
-           // start at the LSB which is the 'first' bit to come down the line, chronologically 
+           // start at the LSB which is the 'first' bit to come down the line, chronologically
            // (Note we had to set I2S_SERCTRL_BITREV to get this to work, but saves us time!)
            if (sample & 0x1) {
              runningsum += *sinc_ptr;     // do the convolution
@@ -162,7 +162,7 @@ void Adafruit_CPlay_Mic::capture(int16_t *buf, uint16_t nSamples) {
     // since we wait for the samples from I2S peripheral, we dont need to delay, we will 'naturally'
     // wait the right amount of time between analog writes
     //Serial.println(runningsum);
-    
+
     runningsum /= 64 ; // convert 16 bit -> 10 bit
     runningsum -= 512;  // make it close to 0-offset signed
 
@@ -194,7 +194,7 @@ void Adafruit_CPlay_Mic::capture(int16_t *buf, uint16_t nSamples) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief Returns somewhat-calibrated sound pressure level.
     @param ms Milliseconds to continuously sample microphone over, 10ms is a good start.
     @returns Floating point Sound Pressure Level, tends to range from 40-120 db SPL
@@ -233,7 +233,7 @@ float Adafruit_CPlay_Mic::soundPressureLevel(uint16_t ms){
 
   ptr = data;
   while(ptr < end) *ptr++ -= avg;
-  
+
    /*******************************
    *   GET MAX VALUE
    ******************************/
@@ -244,7 +244,7 @@ float Adafruit_CPlay_Mic::soundPressureLevel(uint16_t ms){
      int32_t v = abs(*ptr++);
      if(v > maxVal) maxVal = v;
    }
-   
+
    double conv = ((float)maxVal)/1023 * gain;
 
    /*******************************
@@ -257,7 +257,7 @@ float Adafruit_CPlay_Mic::soundPressureLevel(uint16_t ms){
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  16 bit complex data type
 */
 /**************************************************************************/
@@ -270,10 +270,10 @@ extern "C" { // In ffft.S
   void fft_input(const int16_t *, complex_t *),
        fft_execute(complex_t *),
        fft_output(complex_t *, uint16_t *);
-} 
+}
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  AVR ONLY: Performs one cycle of fast Fourier transform (FFT) with audio captured
       from mic on A4.  Output is 32 'bins,' each covering an equal range of
       frequencies from 0 to 4800 Hz (i.e. 0-150 Hz, 150-300 Hz, 300-450, etc).

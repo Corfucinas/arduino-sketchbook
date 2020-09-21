@@ -11,7 +11,7 @@ void setup() {
 void loop() {
   leftButtonPressed = CircuitPlayground.leftButton();
   rightButtonPressed = CircuitPlayground.rightButton();
-  
+
   Serial.print("Left Button: ");
   if (leftButtonPressed) {
     Serial.print("DOWN");
@@ -22,9 +22,9 @@ void loop() {
   if (rightButtonPressed) {
     Serial.print("DOWN");
   } else {
-    Serial.print("  UP");    
+    Serial.print("  UP");
   }
   Serial.println();
-  
+
   delay(1000);
 }

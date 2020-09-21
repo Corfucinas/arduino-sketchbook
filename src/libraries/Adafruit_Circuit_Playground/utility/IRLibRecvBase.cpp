@@ -8,7 +8,7 @@
  * The IRrecvPCI version that uses pin change interrupts and IRrecvLoop which uses no timers
  * or interrupts. Each of these has its own .h and .cpp file.
  *
- * The IRrecvLoop files are in this folder.  However the other two receivers in their own 
+ * The IRrecvLoop files are in this folder.  However the other two receivers in their own
  * separate libraries. That is because their interrupt service routines can conflict
  * with other ISRs. The ISRs conflict would occur even if you did not create an instance
  * of their receiver classes. Similarly the frequency detection receiver which also uses
@@ -55,12 +55,12 @@ void blink13(bool enableBlinkLED){
 #endif
 }
 
-/* Any receiver class must implement a getResults method that will return true when 
- * a complete frame of data has been received. When your getResults determines that 
+/* Any receiver class must implement a getResults method that will return true when
+ * a complete frame of data has been received. When your getResults determines that
  * the frame is complete, it must guarantee that there will be no further changes to
- * the data in the buffer or the length value. It can do that by either disabling 
+ * the data in the buffer or the length value. It can do that by either disabling
  * interrupts or putting the ISR in a state that ensures it will not
- * change those values. Then it must then call IRrecvBase::getResults. This base method 
+ * change those values. Then it must then call IRrecvBase::getResults. This base method
  * will then will perform some math on the values and copy them to the decodeBuffer.
  * Some receivers provide results in recvBuffer measured in ticks of some number of
  * microseconds while others return results in actual microseconds. If you use ticks then
@@ -104,7 +104,7 @@ bool IRrecvBase::getResults(const uint16_t timePerTick) {
  * The interrupt driven receivers call this before enabling interrupts.
  * See the comments on IRrecv::enableIRIn() in IRLibRecv.cpp regarding auto resume.
  */
-void IRrecvBase::enableIRIn(void) { 
+void IRrecvBase::enableIRIn(void) {
 //some IR receiver datesheets recommend pull-up resistors
   pinMode(recvGlobal.recvPin, INPUT_PULLUP);
   recvGlobal.recvLength = 0;
@@ -114,7 +114,7 @@ void IRrecvBase::enableIRIn(void) {
 
 /* Even when not receiving data or waiting to receive data, the ISR may remain active
  * but remains in a do-nothing state. If the user wants to truly shut down the ISR
- * they can call this method. The derived method should disable the ISR and then call 
+ * they can call this method. The derived method should disable the ISR and then call
  * this base method to the turn everything off.
  */
 void IRrecvBase::disableIRIn(void) {
@@ -125,10 +125,10 @@ void IRrecvBase::disableIRIn(void) {
 
 /*
  * Normally recvGlobal.decodeBuffer points to recvGlobal.recvBuffer and therefore
- * decoding uses the same buffer as receiving. However you may want to resume 
+ * decoding uses the same buffer as receiving. However you may want to resume
  * receiving while still decoding. To do so must specify a separate buffer for decoding.
  * You will declare the buffer as "uint16_t myBuffer[RECV_BUF_LENGHT];" in your sketch
- * then pass its address using the method below. Then IRrecvBase::getResults() will copy 
+ * then pass its address using the method below. Then IRrecvBase::getResults() will copy
  * timing values from its buffer to yours. The receiver will then automatically resume.
  * The receiver will not overwrite your buffer unless you have called enableIRIn()
  * to tell it that you have finished your decoding. In other words auto resume will only
@@ -139,7 +139,7 @@ void IRrecvBase::enableAutoResume(uint16_t *P){
   recvGlobal.enableAutoResume=true;
 };
 
-// This had to be a method so that IRrecv::setFrameTimeout can compute 
+// This had to be a method so that IRrecv::setFrameTimeout can compute
 // frameTimeoutTicks.
 void IRrecvBase::setFrameTimeout(uint16_t frameTimeout) {
   recvGlobal.frameTimeout=frameTimeout;
@@ -192,11 +192,11 @@ void IRLib_IRrecvComplete(uint8_t Reason) {
  */
 void IRLib_NoOutput (void) {
 #if defined(IR_SEND_PWM_PIN)
- pinMode(IR_SEND_PWM_PIN, OUTPUT);  
- digitalWrite(IR_SEND_PWM_PIN, LOW); // When not sending PWM, we want it low    
+ pinMode(IR_SEND_PWM_PIN, OUTPUT);
+ digitalWrite(IR_SEND_PWM_PIN, LOW); // When not sending PWM, we want it low
 #endif
 }
-	
+
 /* Do the actual blinking off and on of the indicator LED. Called by the various
  * receiver ISRs
  */
@@ -204,7 +204,7 @@ void IRLib_doBlink(void) {
   if (recvGlobal.enableBlinkLED) {
     if(recvGlobal.recvLength & 1) {
       BLINKLED_ON();  // turn pin 13 LED on
-    } 
+    }
     else {
       BLINKLED_OFF();  // turn pin 13 LED off
     }
@@ -212,4 +212,4 @@ void IRLib_doBlink(void) {
 }
 
 
-#endif //!defined(__NRF52__) 
+#endif //!defined(__NRF52__)

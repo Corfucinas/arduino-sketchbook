@@ -19,7 +19,7 @@
 
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Class that stores state and functions for the microphone on CircuitPlayground boards
 */
 /**************************************************************************/

@@ -4,12 +4,12 @@
  */
 /*
  * NECx is a variation of NEC protocol. The only difference is in the timing of the
- * header.  There are two variations NECx1 and NECx2. They differ only in the way in 
- * which they handle repeat codes.  If you hold a button using NECx1 it does not repeat 
+ * header.  There are two variations NECx1 and NECx2. They differ only in the way in
+ * which they handle repeat codes.  If you hold a button using NECx1 it does not repeat
  * the same sequence. Rather it sends a special sequence consisting of the usual header
  * followed by a normal mark, a "1" bit, and then a long space with a 108ms extent. Note
  * this so-called "ditto" repeat code is slightly different than the one for regular NEC.
- * When IRLib receives one of these special repeat sequences, it returns the 
+ * When IRLib receives one of these special repeat sequences, it returns the
  * value REPEAT_CODE which is defined in IRLibProtocols.h as the value 0xffffffff. If you
  * send REPEAT_CODE, the send routine will create a special sequence for you.
  * Whether it is a normal code or a repeat code the entire frame has a 108ms extent.

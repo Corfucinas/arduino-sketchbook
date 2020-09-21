@@ -11,7 +11,7 @@
 #endif
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Class that stores state and functions for the speaker on CircuitPlayground boards
 */
 /**************************************************************************/
@@ -28,7 +28,7 @@ class Adafruit_CPlay_Speaker {
   void enable(bool e);
 
   /**************************************************************************/
-  /*! 
+  /*!
       @brief  disable the speaker.
       @note this function only has an effect on 'Express' boards
   */
@@ -36,7 +36,7 @@ class Adafruit_CPlay_Speaker {
   void off(void) { enable(false); };
 
   /**************************************************************************/
-  /*! 
+  /*!
       @brief  enable the speaker.
       @note this function only has an effect on 'Express' boards
   */

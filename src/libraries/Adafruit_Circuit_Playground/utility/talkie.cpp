@@ -78,7 +78,7 @@ static uint8_t getBits(uint8_t bits) {
 #define read16(base, bits) pgm_read_word(&base[getBits(bits)]);
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  speak the data at the passed location
     @param addr pointer to the data
 */

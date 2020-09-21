@@ -41,8 +41,8 @@ class IRsendRC5: public virtual IRsendBase {
       data = data << (32 - nBits);
       extent=0;
       mark(RC5_T1); // First start bit
-//Note: Original IRremote library incorrectly assumed second bit was 
-//always a "1". Bit patterns from this decoder are not backward compatible 
+//Note: Original IRremote library incorrectly assumed second bit was
+//always a "1". Bit patterns from this decoder are not backward compatible
 //with patterns produced by the original library. Uncomment the following two
 //lines to maintain backward compatibility.
       //space(RC5_T1); // Second start bit
@@ -62,10 +62,10 @@ class IRsendRC5: public virtual IRsendBase {
 
 #ifdef IRLIBDECODEBASE_H
 
-/* Note this decoder is a derived class from the IRdecodeRC base class 
- * rather than IRdecodeBase. The base class defines the method "getRClevel" 
- * which is common to both RC5 and RC6 protocols. It facilitates the decoding 
- * of phase encoded data. 
+/* Note this decoder is a derived class from the IRdecodeRC base class
+ * rather than IRdecodeBase. The base class defines the method "getRClevel"
+ * which is common to both RC5 and RC6 protocols. It facilitates the decoding
+ * of phase encoded data.
  */
 
 class IRdecodeRC5: public virtual IRdecodeRC {
@@ -80,13 +80,13 @@ class IRdecodeRC5: public virtual IRdecodeRC {
       // Get start bits
       if (getRClevel(&used, RC5_T1) != MARK) return HEADER_MARK_ERROR(RC5_T1);
 //Note: Original IRremote library incorrectly assumed second bit was always
-// a "1". Bit patterns from this decoder are not backward compatible with 
+// a "1". Bit patterns from this decoder are not backward compatible with
 // patterns produced by original library. Uncomment the following two lines
 // to maintain backward compatibility.
       //if (getRClevel(&used, RC5_T1) != SPACE) return HEADER_SPACE_ERROR(RC5_T1);
       //if (getRClevel(&used, RC5_T1) != MARK) return HEADER_MARK_ERROR(RC5_T1);
       for (nBits = 0; offset < recvGlobal.decodeLength; nBits++) {
-        RCLevel levelA = getRClevel(&used, RC5_T1); 
+        RCLevel levelA = getRClevel(&used, RC5_T1);
         RCLevel levelB = getRClevel(&used, RC5_T1);
         if (levelA == SPACE && levelB == MARK) {
           data = (data << 1) | 1;   // 1 bit

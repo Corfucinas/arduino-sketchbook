@@ -1,4 +1,4 @@
-/* IRLibDecodeBase.h 
+/* IRLibDecodeBase.h
  * Part of IRLib Library for Arduino receiving, decoding, and sending
  * infrared signals. See COPYRIGHT.txt and LICENSE.txt for more information.
  */
@@ -42,9 +42,9 @@ protected:
   uint32_t data;
 };
 
-/* The remainder of this file a variety of default values and macros which are 
+/* The remainder of this file a variety of default values and macros which are
  * used internally. They used to be in a separate file IRLibMatch.h but it's easier
- * to include them here.  You need not worry about them unless you are creating 
+ * to include them here.  You need not worry about them unless you are creating
  * your own decoding routines. See the documentation how to implement new protocols
  * for a more detailed explanation of these definitions and routines.
  */
@@ -53,14 +53,14 @@ protected:
  * Originally all timing comparisons for decoding were based on a percent of the
  * target value. However when target values are relatively large, the percent tolerance
  * is too much.  In some instances an absolute tolerance is needed. In order to maintain
- * backward compatibility, the default will be to continue to use percent. If you wish 
+ * backward compatibility, the default will be to continue to use percent. If you wish
  * to default to an absolute tolerance, you should comment out the line below.
  */
 #define IRLIB_USE_PERCENT
 
 /*
- * These are some miscellaneous definitions that are needed by the decoding routines. 
- * You need not include this file unless you are creating custom decode routines 
+ * These are some miscellaneous definitions that are needed by the decoding routines.
+ * You need not include this file unless you are creating custom decode routines
  * which will require these macros and definitions. Even if you include it, you probably
  * don't need to be intimately familiar with the internal details.
  */
@@ -75,7 +75,7 @@ protected:
 void IRLIB_ATTEMPT_MESSAGE(const __FlashStringHelper * s) {Serial.print(F("Attempting ")); Serial.print(s); Serial.println(F(" decode:"));};
 void IRLIB_TRACE_MESSAGE(const __FlashStringHelper * s) {Serial.print(F("Executing ")); Serial.println(s);};
 uint8_t IRLIB_REJECTION_MESSAGE(const __FlashStringHelper * s) { Serial.print(F(" Protocol failed because ")); Serial.print(s); Serial.println(F(" wrong.")); return false;};
-uint8_t IRLIB_DATA_ERROR_MESSAGE(const __FlashStringHelper * s, uint8_t index, uint16_t value, uint16_t expected) {  
+uint8_t IRLIB_DATA_ERROR_MESSAGE(const __FlashStringHelper * s, uint8_t index, uint16_t value, uint16_t expected) {
  IRLIB_REJECTION_MESSAGE(s); Serial.print(F("Error occurred with decodeBuffer[")); Serial.print(index,DEC); Serial.print(F("]=")); Serial.print(value,DEC);
  Serial.print(F(" expected:")); Serial.println(expected,DEC); return false;
 };
@@ -86,7 +86,7 @@ uint8_t IRLIB_DATA_ERROR_MESSAGE(const __FlashStringHelper * s, uint8_t index, u
 #define DATA_SPACE_ERROR(expected) IRLIB_DATA_ERROR_MESSAGE(F("data space"),offset,recvGlobal.decodeBuffer[offset],expected);
 #define TRAILER_BIT_ERROR(expected) IRLIB_DATA_ERROR_MESSAGE(F("RC6 trailer bit length"),offset,recvGlobal.decodeBuffer[offset],expected);
 #define BIT_COUNT_ERROR IRLIB_REJECTION_MESSAGE(F("invalid number of bits"));
-#else 
+#else
 #define IRLIB_ATTEMPT_MESSAGE(s)
 #define IRLIB_TRACE_MESSAGE(s)
 #define IRLIB_REJECTION_MESSAGE(s) false
@@ -101,4 +101,3 @@ uint8_t IRLIB_DATA_ERROR_MESSAGE(const __FlashStringHelper * s, uint8_t index, u
 #endif
 
 #endif	//IRLIBDECODEBASE_H
- 

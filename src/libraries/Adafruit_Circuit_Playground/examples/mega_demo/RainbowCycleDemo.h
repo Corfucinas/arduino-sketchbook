@@ -3,7 +3,7 @@
 
 #include "Demo.h"
 
-// Animation speeds to loop through with mode presses.  The current milliseconds 
+// Animation speeds to loop through with mode presses.  The current milliseconds
 // are divided by this value so the smaller the value the faster the animation.
 static int speeds[] = { 5, 10, 50, 100 };
 
@@ -33,7 +33,7 @@ public:
 
 private:
   int currentSpeed;
-  
+
 };
 
 

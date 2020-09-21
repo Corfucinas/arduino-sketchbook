@@ -2,16 +2,16 @@
  * Part of IRLib Library for Arduino receiving, decoding, and sending
  * infrared signals. See COPYRIGHT.txt and LICENSE.txt for more information.
  */
-/* 
- * This file is for creating a customer decode or send class which contains only 
+/*
+ * This file is for creating a customer decode or send class which contains only
  * the protocols that you will actually use. At the top of your sketch you should
  * include the Send and/or Decode base modules followed by at least one or more
  * protocol module. Then conclude with this module.
- * WARNING: The lowest numbered protocol which you are using MUST be included first. 
- *		The remaining protocol modules technically could be in any order however we 
- *		recommend that you maintain numerical order because you might at some point 
+ * WARNING: The lowest numbered protocol which you are using MUST be included first.
+ *		The remaining protocol modules technically could be in any order however we
+ *		recommend that you maintain numerical order because you might at some point
  *		comment out the top one and then the lowest would not be first causing an error.
- *   
+ *
  * Here is an example...
  *
  * #include <IRLibSendBase.h>	//Only include if you are sending
@@ -23,7 +23,7 @@
  * IRsend My_Sender;	//declarative sense of the sending routine if needed
  * //The rest of your code goes here
  */
- 
+
 #ifndef IRLIB_COMBO_H
 #define IRLIB_COMBO_H
 
@@ -141,11 +141,11 @@
 #endif
 /*
  * You may add additional protocols by copying and modifying the previous six lines.
- * You must also add appropriate macros in each segment below. Be sure to maintain 
+ * You must also add appropriate macros in each segment below. Be sure to maintain
  * numerical order. Also the final entry in each list MUST BE the Hash_Raw version.
  */
 #ifdef IRLIBDECODEBASE_H
-class IRdecode: 
+class IRdecode:
 	PV_IR_DECODE_PROTOCOL_01
 	PV_IR_DECODE_PROTOCOL_02
 	PV_IR_DECODE_PROTOCOL_03
@@ -163,7 +163,7 @@ class IRdecode:
 	PV_IR_DECODE_PROTOCOL_90 //Add additional 15, 16 etc. above this
 	PV_IR_DECODE_PROTOCOL_91
 	PV_IR_DECODE_PROTOCOL_92
-	PV_IR_DECODE_HASH	//Must be last one. 
+	PV_IR_DECODE_HASH	//Must be last one.
 {
 public:
 	bool decode(void) {
@@ -184,7 +184,7 @@ public:
     IR_DECODE_PROTOCOL_90 //Add additional 15, 16 etc. above this
 		IR_DECODE_PROTOCOL_91
 		IR_DECODE_PROTOCOL_92
-	  IR_DECODE_HASH	//Must be last one. 
+	  IR_DECODE_HASH	//Must be last one.
 		return false;
 	};
 #ifdef IRLIB_PROTOCOL_12_H
@@ -201,7 +201,7 @@ public:
 #endif //IRLIBDECODEBASE_H
 
 #ifdef IRLIBSENDBASE_H
-class IRsend: 
+class IRsend:
 	PV_IR_SEND_PROTOCOL_01
 	PV_IR_SEND_PROTOCOL_02
 	PV_IR_SEND_PROTOCOL_03
@@ -239,7 +239,7 @@ public:
 			IR_SEND_PROTOCOL_12
 			IR_SEND_PROTOCOL_13
 			IR_SEND_PROTOCOL_14
-			IR_SEND_PROTOCOL_90 //Add additional 15, 16 etc. above this 
+			IR_SEND_PROTOCOL_90 //Add additional 15, 16 etc. above this
 			IR_SEND_PROTOCOL_91
 			IR_SEND_PROTOCOL_92
 			IR_SEND_RAW	//Must be last one.

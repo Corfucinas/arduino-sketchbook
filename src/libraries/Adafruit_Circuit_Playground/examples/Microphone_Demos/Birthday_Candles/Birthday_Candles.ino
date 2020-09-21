@@ -33,7 +33,7 @@
                                 // The value 35 degrees is a nice orange in the
                                 // middle of red and yellow hues that will look like
                                 // a flame flickering as the hues animate.
-                                // For the flicker effect the pixels will cycle 
+                                // For the flicker effect the pixels will cycle
                                 // around hues that are +/-10 degrees of this value.
                                 // For the solid effect the pixels will be set
                                 // to this hue (at full saturation and value).
@@ -127,7 +127,7 @@ void playNote(int frequency, int duration, bool hold=false, bool measure=true) {
   }
   if (hold) {
     // For a note that's held play it a little longer than the specified duration
-    // so it blends into the next tone (but there's still a small delay to 
+    // so it blends into the next tone (but there's still a small delay to
     // hear the next note).
     CircuitPlayground.playTone(frequency, duration + duration/32, false);
   }
@@ -169,7 +169,7 @@ void waitBreath(uint32_t milliseconds) {
       showLitSolid();
     }
     // Check if we just hit 0 candles lit up, i.e. they're all blown out.
-    // Turn off the pixels and play a little celebration tune when it 
+    // Turn off the pixels and play a little celebration tune when it
     // happens, then indicate the candles are blown out with the -1 sentinel value.
     if (lit == 0) {
       CircuitPlayground.clearPixels();

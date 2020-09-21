@@ -4,17 +4,17 @@
 
   @section intro Introduction
 
-  An Arduino sketch for testing the NMEA_EXTENSIONS to the library. Does 
-  not require any GPS hardware. Boat is a data only object we can use to 
-  represent the actual data and build sentences from. GPS is a data only 
-  object that parses the sentences and saves the results, the same way you 
+  An Arduino sketch for testing the NMEA_EXTENSIONS to the library. Does
+  not require any GPS hardware. Boat is a data only object we can use to
+  represent the actual data and build sentences from. GPS is a data only
+  object that parses the sentences and saves the results, the same way you
   would with a communicating GPS object
 
-  Only some of the data values will have added history. Note that history 
-  is stored as integers, scaled and offset from the float values to save 
-  memory. The AWA (Apparent Wind Angle) is recorded as three components, 
-  so that sin and cos parts can be accurately time averaged. onList() allows 
-  testing sentences against a list to see if they should be passed on to 
+  Only some of the data values will have added history. Note that history
+  is stored as integers, scaled and offset from the float values to save
+  memory. The AWA (Apparent Wind Angle) is recorded as three components,
+  so that sin and cos parts can be accurately time averaged. onList() allows
+  testing sentences against a list to see if they should be passed on to
   another listener, allowing your sketch to act as an NMEA multiplexer.
 
   Although it will just barely compile for an UNO with the NMEA_EXTENSIONS,
@@ -63,18 +63,18 @@ void loop() {
     Serial.print("\nSentences built from Boat and parsed by GPS ");
     Serial.print("(Only a few get passed on to the ST network.):\n\n");
     for (int i = 0;strncmp(senList[i],"ZZ",2);i++){
-      if (GPS.parse(Boat.build(latestBoat, "II", senList[i]))){ 
-        if (GPS.onList(latestBoat,passList)) 
+      if (GPS.parse(Boat.build(latestBoat, "II", senList[i]))){
+        if (GPS.onList(latestBoat,passList))
           Serial.print("Pass to ST: ");
         else Serial.print("   No Pass: ");
         Serial.print(latestBoat);
-      } else { 
+      } else {
         Serial.print("Couldn't build and parse a ");
         Serial.print(senList[i]);
         Serial.print(" sentence, maybe because sprintf() doesn't work with %f.");
       }
     }
-    
+
     Serial.print("\nSome of the resulting data stored in GPS:\n\n");
     GPS.showDataValue(NMEA_LAT);
     GPS.showDataValue(NMEA_LON);
@@ -89,7 +89,7 @@ void loop() {
     Serial.print(GPS.get(NMEA_AWA));
     Serial.print(" while the smoothed value is: ");
     Serial.println(GPS.getSmoothed(NMEA_AWA));
-    
+
 #endif // NMEA_Extensions
   }
 }
@@ -130,10 +130,10 @@ void updateBoat() { // Fill up the boat values with
 
 #ifdef NMEA_EXTENSIONS
 void addHistory(Adafruit_GPS *nmea) {
-  // Record integer history for HDOP, scaled by 10.0, offset by 0.0, 
+  // Record integer history for HDOP, scaled by 10.0, offset by 0.0,
   // every 15 seconds for the most recent 20 values.
   nmea->initHistory(NMEA_HDOP, 10.0, 0.0, 15, 20);
-  nmea->initHistory(NMEA_COG, 10.0, 0.0, 1); 
+  nmea->initHistory(NMEA_COG, 10.0, 0.0, 1);
   nmea->initHistory(NMEA_AWA, 10.0, 0.0, 1);
   nmea->initHistory(NMEA_HDG, 10.0, 0.0, 3);
   // Record pressure every 10 minutes, in Pa relative to 1 bar

@@ -4,13 +4,13 @@
  */
 
 /* The G.I. Cable protocol is is used by many Motorola brand cable boxes manufactured by
- * General Instruments. The IRP notation for this protocol is 
+ * General Instruments. The IRP notation for this protocol is
  * "{38.7k,490}<1,-4.5|1,-9>(18,-9,F:8,D:4,C:4,1,-84,(18,-4.5,1,-178)*) {C = -(D + F:4 + F:4:4)}"
  * It is a 16-bit code which uses an unusual "ditto" repeat sequence similar to NEC.
  * In fact it is so similar that IRLib generally not distinguish between the two.
  * The header timing for G.I. Cable ditto is 8820,1960 and for NEC is 9024,2256
- * If you are using both protocols and you receive an NEC ditto immediately after 
- * receiving a G.I.Cable then you should presume it is a G.I.Cable and vice versa. 
+ * If you are using both protocols and you receive an NEC ditto immediately after
+ * receiving a G.I.Cable then you should presume it is a G.I.Cable and vice versa.
  */
 #ifndef IRLIB_PROTOCOL_09_H
 #define IRLIB_PROTOCOL_09_H

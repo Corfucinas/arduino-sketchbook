@@ -24,7 +24,7 @@ void setup() {
   delay(100);
   Serial.println("PDM Mic test");
   Serial.println("-------------------");
-  
+
   pdmspi.begin(16000);
   Serial.print("Final PDM frequency: "); Serial.println(pdmspi.sampleRate);
 

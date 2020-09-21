@@ -29,7 +29,7 @@
                                   // pass by the light sensor.  Set this to
                                   // the value 1 to ignore this calculation
                                   // and just see the raw cycles / second.
-                                  
+
 #define SAMPLE_DEPTH       512    // How many samples to take when measuring
                                   // the spinner speed.  The larger this value
                                   // the more memory that will be consumed but
@@ -55,7 +55,7 @@
                                   // can be detected but slow speeds (below 10hz)
                                   // are harder to detect.  You can increase the
                                   // sample depth to help improve the range
-                                  // of detection speeds, but there's a limit 
+                                  // of detection speeds, but there's a limit
                                   // based on the memory available.
 
 #define THRESHOLD          400    // How big the amplitude of a cyclic
@@ -134,7 +134,7 @@ void loop() {
   for (int i=1; i<SAMPLE_DEPTH; ++i) {
     uint16_t p0 = samples[i-1];
     uint16_t p1 = samples[i];
-    if ((p1 == midpoint) || 
+    if ((p1 == midpoint) ||
         ((p0 < midpoint) && (p1 > midpoint)) ||
         ((p0 > midpoint) && (p1 < midpoint))) {
       crossings += 1;

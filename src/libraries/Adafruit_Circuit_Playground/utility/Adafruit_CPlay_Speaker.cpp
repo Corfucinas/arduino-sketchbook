@@ -5,7 +5,7 @@
 #include "Adafruit_CPlay_Speaker.h"
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Sets up Circuit Playground speaker for PWM audio output: enables 48 KHz
         high-speed PWM mode, configures Timer/Counter 4, sets PWM duty cycle to
         50% (speaker idle position).
@@ -41,20 +41,20 @@ void Adafruit_CPlay_Speaker::begin(void) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  enable or disable the speaker. This function only works on 'Express' boards.
     @param e pass true to enable, false to disable
 */
 /**************************************************************************/
 
-void Adafruit_CPlay_Speaker::enable(bool e)  { 
+void Adafruit_CPlay_Speaker::enable(bool e)  {
 #if !defined(__AVR__) // circuit playground express has nicer amp w/shutdown
   digitalWrite(CPLAY_SPEAKER_SHUTDOWN, e);
-#endif 
+#endif
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Turns off PWM output to the speaker.
 */
 /**************************************************************************/
@@ -72,7 +72,7 @@ void Adafruit_CPlay_Speaker::end(void) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Sets speaker position, enables PWM output if needed.
     @param value the value to set (0-255; 127=idle)
 */
@@ -87,7 +87,7 @@ void Adafruit_CPlay_Speaker::set(uint8_t value) {
 }
 
 /**************************************************************************/
-/*! 
+/*!
     @brief  Plays digitized 8-bit audio (optionally 10 bits on Express board) from
       a PROGMEM (flash memory) buffer.  Maybe 1-3 seconds tops depending on
       sampling rate (e.g. 8000 Hz = 8 Kbytes/second).  Max ~20K space avail on

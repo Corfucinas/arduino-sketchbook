@@ -5,7 +5,7 @@
    Press the following keys on the remote:
     vol-          decrease brightness
     vol+          increase brightness
-    right arrow   rotate clockwise   
+    right arrow   rotate clockwise
     left arrow    rotate counterclockwise
     up arrow      rotate faster
     down arrow    rotate slower
@@ -39,9 +39,9 @@ void Show_Pattern(void) {
     j= (20+i+Phase*Direction) % 10;
     switch (Pattern) {
       case RAINBOW:
-        CircuitPlayground.setPixelColor(j, CircuitPlayground.colorWheel(25*i));  
+        CircuitPlayground.setPixelColor(j, CircuitPlayground.colorWheel(25*i));
         break;
-      case CANDY_CANE: 
+      case CANDY_CANE:
         if((i % 5)<2) {
           CircuitPlayground.setPixelColor(j, 255,0,0);
         } else  {
@@ -56,7 +56,7 @@ void Show_Pattern(void) {
         }
         break;
       case MONOCHROME:
-        CircuitPlayground.setPixelColor(i, CircuitPlayground.colorWheel(25*Mono));  
+        CircuitPlayground.setPixelColor(i, CircuitPlayground.colorWheel(25*Mono));
         break;
     }
   }
@@ -67,7 +67,7 @@ void setup() {
   Serial.begin(9600);
   CircuitPlayground.irReceiver.enableIRIn(); // Start the receiver
   Bright=8;  Phase=0;  Pattern=2;  Direction=1;  Speed=300;
-  Mono=0;  
+  Mono=0;
 }
 
 void loop() {
@@ -90,7 +90,7 @@ void loop() {
 
   // Did we get any decodable messages?
   if (! CircuitPlayground.irDecoder.decode()) {
-    CircuitPlayground.irReceiver.enableIRIn(); // Restart receiver  
+    CircuitPlayground.irReceiver.enableIRIn(); // Restart receiver
     return;
   }
 
@@ -99,33 +99,33 @@ void loop() {
 
   // Did we get any NEC remote messages?
   if (! CircuitPlayground.irDecoder.protocolNum == NEC) {
-    CircuitPlayground.irReceiver.enableIRIn(); // Restart receiver  
+    CircuitPlayground.irReceiver.enableIRIn(); // Restart receiver
     return;
   }
 
   // What message did we get?
   switch(CircuitPlayground.irDecoder.value) {
-  case ADAF_MINI_0_10_PLUS: 
+  case ADAF_MINI_0_10_PLUS:
     Serial.println("Rainbow mode!");
-    Pattern = RAINBOW; 
+    Pattern = RAINBOW;
     break;
-  case ADAF_MINI_1: 
+  case ADAF_MINI_1:
     Serial.println("Candy Cane mode!");
-    Pattern = CANDY_CANE;  
+    Pattern = CANDY_CANE;
     break;
-  case ADAF_MINI_2: 
+  case ADAF_MINI_2:
     Serial.println("Just One mode!");
-    Pattern = JUST_ONE;  
+    Pattern = JUST_ONE;
     break;
-  case ADAF_MINI_3: 
+  case ADAF_MINI_3:
     Serial.println("Monochrome mode, less");
-    Pattern = MONOCHROME; 
+    Pattern = MONOCHROME;
     Mono--;
     if (Mono < 0) {
       Mono = 9;
     }
     break;
-  case ADAF_MINI_4: 
+  case ADAF_MINI_4:
     Serial.println("Monochrome mode, more");
     Pattern = MONOCHROME;
     Mono++;
@@ -133,31 +133,31 @@ void loop() {
       Mono = 0;
     }
     break;
-  case ADAF_MINI_LEFT_ARROW: 
+  case ADAF_MINI_LEFT_ARROW:
     Serial.println("Counter-Clockwise");
     Direction = 1;
     break;
-  case ADAF_MINI_RIGHT_ARROW: 
+  case ADAF_MINI_RIGHT_ARROW:
     Serial.println("Clockwise");
     Direction = -1;
     break;
-  case ADAF_MINI_VOLUME_UP: 
+  case ADAF_MINI_VOLUME_UP:
     Serial.println("Brighter");
-    Bright = min(255, Bright+2); 
+    Bright = min(255, Bright+2);
     break;
-  case ADAF_MINI_VOLUME_DOWN: 
+  case ADAF_MINI_VOLUME_DOWN:
     Serial.println("Dimmer");
-    Bright = max(0, Bright-2); 
+    Bright = max(0, Bright-2);
     break;
-  case ADAF_MINI_UP_ARROW: 
+  case ADAF_MINI_UP_ARROW:
     Serial.println("Faster");
-    Speed = max(50, Speed-50); 
+    Speed = max(50, Speed-50);
     break;
-  case ADAF_MINI_DOWN_ARROW: 
+  case ADAF_MINI_DOWN_ARROW:
     Serial.println("Slower");
-    Speed = min(2000, Speed+50); 
+    Speed = min(2000, Speed+50);
     break;
   }
   //Restart receiver
-  CircuitPlayground.irReceiver.enableIRIn();      
+  CircuitPlayground.irReceiver.enableIRIn();
 }

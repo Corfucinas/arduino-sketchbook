@@ -43,8 +43,8 @@ public:
     // complement of the next more significant 8 bits. While it's probably not necessary
     // to error check this, you can un-comment the next 4 lines of code to do this extra
     // checking.
-    //  long S1= (value & 0x0007ff);  // 00 0000 0000 0111 1111 1111 
-    //  long S2= (value & 0x3ff800)>> 11;  // 11 1111 1111 1000 0000 0000 
+    //  long S1= (value & 0x0007ff);  // 00 0000 0000 0111 1111 1111
+    //  long S2= (value & 0x3ff800)>> 11;  // 11 1111 1111 1000 0000 0000
     //  S2= (~S2) & 0x0007ff;
     //  if (S1!=S2) return IRLIB_REJECTION_MESSAGE(F("inverted bit redundancy"));
     protocolNum = PANASONIC_OLD;

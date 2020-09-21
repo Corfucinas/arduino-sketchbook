@@ -9,7 +9,7 @@
 // These phrases have a very military bias
 // with lots of very useful engineering words.
 // They also have good expression.
-// 
+//
 
 #include <Adafruit_CircuitPlayground.h>
 #include <Wire.h>

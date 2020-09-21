@@ -20,7 +20,7 @@
 #define JVC 6
 #define NECX 7
 #define SAMSUNG36 8
-#define GICABLE 9 
+#define GICABLE 9
 #define DIRECTV 10
 #define RCMM 11
 #define CYKM 12
@@ -29,9 +29,9 @@
 #define LAST_PROTOCOL 12 //Be sure to update this when adding protocols
 
 /*
- * Returns a pointer to a flash stored string that is the name of the protocol received. 
+ * Returns a pointer to a flash stored string that is the name of the protocol received.
  */
-const __FlashStringHelper *Pnames(uint8_t Type); 
+const __FlashStringHelper *Pnames(uint8_t Type);
 
 /*
  * Miscellaneous values used by both Send and Decode modules

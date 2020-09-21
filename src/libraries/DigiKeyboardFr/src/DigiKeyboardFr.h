@@ -92,7 +92,7 @@ const uint16_t ascii_to_scan_code_table_fr[128] PROGMEM =
 				0x00,                 // GS
 				0x00,                 // RS
 				0x00,                 // US
-				
+
 				44,                   //  ' '
 				56,                   // !
 				32,                   // "
